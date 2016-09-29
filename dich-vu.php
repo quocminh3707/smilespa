@@ -1,9 +1,10 @@
 <?php  
-	require './template-top.php'; 
-	require './template-left.php'; 
-	include_once './include/dbMySql.php';
-	$con = new DB_con();
-	$res=$con->Select("dichvu");
+
+	require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
+
+	require DIRECT_DIR . 'template-top.php'; 
+	require DIRECT_DIR . 'template-left.php'; 
+	
 ?>
 <div class="page-header">
     <h1>
@@ -14,95 +15,101 @@
         </small>
     </h1>
 </div>
-<div class="pull-right mr-bottom" >
-	<a href="#create-dichvu" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
-			<i class="ace-icon fa fa-plus bigger-120"></i>
-			Thêm
-	</a>
-	<a href="#del-dichvu" role="button" class="btn btn-xs btn-danger btn-delete" data-toggle="modal">
-			<i class="ace-icon fa fa-trash-o bigger-120"></i>
-			Xóa
-	</a>
-</div>
+<form id='form-delete-selected' action='dichvu/delete-selected.php' method='post'>
+	
+	<div class="pull-right mr-bottom" >
+		<a href="#create-dichvu" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
+				<i class="ace-icon fa fa-plus bigger-120"></i>
+				Thêm
+		</a>
+		<a href="#del-dichvu" role="button" class="btn btn-xs btn-danger btn-delete-selected">
+				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+				Xóa
+		</a>
+	</div>
 
-<table class="table table-bordered table-hover">
-	<thead>
-	<tr>
-		<th class="center">
-			<label class="pos-rel">
-				<input type="checkbox" class="ace">
-				<span class="lbl"></span>
-			</label>
-		</th>
-		<th class="center">Mã dịch vụ</th>
-		<th class="center">Tên dịch vụ</th>
-		<th class="center">Tên cơ sở</th>
-		<th class="center">Tình trạng</th>
-		<th class="center">Đơn giá hiện tại</th>
-		<th>
-		</th>
-	</tr>
-	</thead>
-	<tbody>
-			
-			
-			<?php
-			 while($row=mysql_fetch_row($res))
-			 {
-			   ?>	
-						<tr>
-						<th class="center">
-						<label class="pos-rel">
-								<input type="checkbox" class="ace">
-								<span class="lbl"></span>
-							</label>
-						</th>
-						<td class="text-center"><?php echo $row[1]; ?></td>
-						<td class="text-center"><?php echo $row[2]; ?></td>
-						<td class="text-center">
+	<table class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th class="center">
+				<label class="pos-rel">
+					<input type="checkbox" id='select-all' class="ace">
+					<span class="lbl"></span>
+				</label>
+			</th>
+			<th class="center">Mã dịch vụ</th>
+			<th class="center">Tên dịch vụ</th>
+			<th class="center">Tên cơ sở</th>
+			<th class="center">Tình trạng</th>
+			<th class="center">Đơn giá hiện tại</th>
+			<th>
+			</th>
+		</tr>
+		</thead>
+		<tbody>
+				
+				
+				<?php
+				$all_dichvu = Model_DichVu::all()->toArray();
+				 foreach($all_dichvu as $row)
+				 {
+				   ?>	
+							<tr>
+							<th class="center">
+							<label class="pos-rel">
+									<input type="checkbox" class='row-select' name='selected[]' value='<?php echo $row['id'] ?>' class="ace">
+									<span class="lbl"></span>
+								</label>
+							</th>
+							<td class="text-center"><?php echo $row['MaDichVu']; ?></td>
+							<td class="text-center"><?php echo $row['TenDichVu']; ?></td>
+							<td class="text-center">
+								<?php 
+								$coso = $row['MaCoSo'];
+								if($coso == "CS1" ){
+									echo "Cơ sở Huế";
+								}else{
+									echo "Cơ sở Sài Gòn";
+								}
+								?>
+							</td>
+							<td class="text-center">
 							<?php 
-							$coso = $row[3];
-							if($coso == "CS1" ){
-								echo "Cơ sở Huế";
-							}else{
-								echo "Cơ sở Sài Gòn";
-							}
-							?>
-						</td>
-						<td class="text-center">
-						<?php 
-							$coso = $row[4];
-							if($coso == 0 ){
-								echo "Đang sử dụng";
-							}else{
-								echo "Hết sử dụng";
-							}
-							?>
-						</td>
-						<td class="text-center"><?php echo $row[5]; ?></td>
-						<td class="text-center">
-							<div class="btn-group">
-								<button class="btn btn-xs btn-primary btn-price-edit" data-objid="" data-objma="<?php  echo $row[0]; ?>" data-objname="<?php  echo $row[0]; ?>" data-objprice="<?php  echo $row[0]; ?>">
-									<i class="ace-icon fa fa-dollar bigger-120"></i>
-								</button>
-								<button class="btn btn-xs btn-info btn-edit" data-objid="<?php  echo $row[0]; ?>">
-									<i class="ace-icon fa fa-pencil bigger-120"></i>
-								</button>
-								<a href="#del-dichvu" role="button" data-id="<?php  echo $row[0]; ?>" data-name="<?php echo $row[2] ?>" class="btn btn-xs btn-danger btn-delete">
-										<i class="ace-icon fa fa-trash-o bigger-120"></i>
-										Xóa
-								</a>
-							</div>
-						</td>
-						</tr>
-						<?php
-			 }
-			 ?>
+								$coso = $row['TinhTrang'];
+								if($coso == 0 ){
+									echo "Đang sử dụng";
+								}else{
+									echo "Hết sử dụng";
+								}
+								?>
+							</td>
+							<td class="text-center"><?php echo $row['DonGia']; ?></td>
+							<td class="text-center">
+								<div class="btn-group">
+									<button type='button' class="btn btn-xs btn-primary btn-price-edit" data-objid="" data-objma="<?php  echo $row['id']; ?>" data-objname="<?php  echo $row['id']; ?>" data-objprice="<?php  echo $row['id']; ?>">
+										<i class="ace-icon fa fa-dollar bigger-120"></i>
+									</button>
+									<button type='button' class="btn btn-xs btn-info btn-edit" data-objid="<?php  echo $row['id']; ?>">
+										<i class="ace-icon fa fa-pencil bigger-120"></i>
+									</button>
+									<a href="#del-dichvu" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaDichVu'] ?>" class="btn btn-xs btn-danger btn-delete">
+											<i class="ace-icon fa fa-trash-o bigger-120"></i>
+											Xóa
+									</a>
+								</div>
+							</td>
+							</tr>
+							<?php
+				 }
+				 ?>
+				
 			
 		
-	
-	</tbody>
-</table>
+		</tbody>
+	</table>
+
+
+</form>
 <div id="result"></div>
 <div id="create-dichvu" class="modal fade" tabindex="-1">
 		<div class="modal-dialog">
@@ -179,37 +186,41 @@
     </div><!-- /.modal-dialog -->
 </div>
 <script>		
-// $(document).ready(function() {
-
-	// $("#submit").click(function(){
-
-			// $.ajax({
-			// url: "dichvu/create.php",
-			// type: "POST",
-			// data: {
-				// madichvu: $("#MaDichVu").val(),
-				// tendichvu: $("#TenDichVu").val(),
-				// trinhtrang: $("#TinhTrang").val(),
-				// dongia: $("#DonGia").val()
-			// },
-			// dataType: "JSON",
-			// success: function (jsonStr) {
-				// $("#result").text(JSON.stringify(jsonStr));
-			// }
-		// });
-
-	// }); 
-
-// });
+ function edit_ajax(id) {
+        $.ajax({
+            url: 'dichvu/get.php?id=' + id,
+            type: 'GET',
+            dataType: 'html',
+            error: function () {
+                alert('Ajax error!');
+            },
+            success: function (json) {
+                $('#modalTitle').html('Chỉnh sửa');
+                var obj = jQuery.parseJSON(json);
+                if (obj == null) {
+                    alert('Không lấy được dữ liệu! Xin vui lòng thử lại sau!');
+                } else {
+                    $('#IDHidden').val(obj.IDKhachHang);
+                    $('#Ho').val(obj.Ho);
+                    $('#Ten').val(obj.Ten);
+                    $('#SoDienThoai').val(obj.SoDienThoai);
+                    $('#Email').val(obj.Email);
+                    $('#DiaChi').val(obj.DiaChi);
+                    $('#MaCoSo').val(obj.MaCoSo);
+                    $('#modalPopup').modal();
+                }
+            }
+        });
+    }
 function del(id, name) {
         $('#msg-delete').html('Bạn có chắc chắn muốn xóa khách hàng <b>' + name + '</b> không?');
-        $('#msg-link').attr('href', 'http://goldenlotushotel.vn/spa/KhachHang/delete/' + id);
+        $('#msg-link').attr('href', 'dichvu/delete.php?id=' + id);
         $('#del-dichvu').modal();
     }
 // $(document).ready(function () {
-        // $('.btn-edit').click(function (e) {
-            // edit_ajax($(this).data('objid'));
-        // });
+        $('.btn-edit').click(function (e) {
+            edit_ajax($(this).data('objid'));
+        });
         // $('.btn-create').click(function (e) {
             // create();
         // });
@@ -222,6 +233,36 @@ function del(id, name) {
 			var name = $(this).attr('data-name');
 			var id = $(this).attr('data-id');
             del(id, name);
+        });
+        $('#select-all').click(function(){
+        	if($(this).is(':checked')){
+        		$('.row-select').prop('checked', true);
+        	}else{
+				$('.row-select').prop('checked', false);
+        	}
+        });
+        $('.btn-delete-selected').click(function(){
+        	swal({   
+        		title: "Are you sure?",   
+        		type: "warning",   
+        		showCancelButton: true,   
+        		confirmButtonText: "Yes, delete it!",   
+        		closeOnConfirm: false,   
+        	}, function(isConfirm){ 
+        		if(isConfirm){
+        			$('#form-delete-selected').submit();	
+        		} 
+        		
+        	});
+        });
+        $('#form-validate').validate({
+        	rules: {
+        		MaDichVu: {
+        			required: true,
+        			minlength: 2,
+        			number: true,
+        		}
+        	}
         });
 </script>		
 					<!-- PAGE CONTENT ENDS -->

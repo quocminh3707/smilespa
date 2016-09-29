@@ -61,8 +61,7 @@
 
 		<!-- inline scripts related to this page -->
 		
-		<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="assets/js/jquery.validate_vi.js"></script>
+		
 		<script type="text/javascript">
 		
 		</script>

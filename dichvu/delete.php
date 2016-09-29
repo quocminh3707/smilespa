@@ -1,10 +1,13 @@
 <?php
-include_once './include/dbMySql.php';
-$con = new DB_con();
-$table = "dich_vu";
-if(isset($_GET['delete_id']))
+require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
+
+
+if(isset($_GET['id']))
 {
- $id=$_GET['delete_id'];
- $res=$con->delete($table,$id);
+
+	$dichvu = Model_DichVu::find($_GET['id']);
+	$dichvu->delete();
+
+ 	header("Location: ../dich-vu.php"); 
 }
 ?>
