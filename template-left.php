@@ -78,6 +78,12 @@
 						</a>
 					</li>
 					<li>
+						<a href="khuyen-mai.php">
+							<i class="menu-icon fa fa-gift"></i>
+							<span class="menu-text">Khuyến mãi</span>
+						</a>
+					</li>
+					<li>
 						<a href="thong-ke.php">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
 							<span class="menu-text">Thống kê</span>

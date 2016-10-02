@@ -4,8 +4,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 
 if(isset($_POST['selected'])){
 	foreach($_POST['selected'] as $id){
-		$dichvu = Model_DichVu::find($id);
+		$dichvu = Model_MyPham::find($id);
 		$dichvu->delete();
 	}	
 }
-header("Location: ../dich-vu.php"); 
+header("Location: ../danh-muc-my-pham.php"); 

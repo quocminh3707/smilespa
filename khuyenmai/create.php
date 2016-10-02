@@ -1,11 +1,10 @@
-<?php
+<?php 
+
 require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 
+if (isset($_POST['submit'])) {
 
-if(isset($_GET['id']))
-{
-
-	$dichvu = Model_DichVu::find($_GET['id']);
+	$dichvu = new Model_DichVu();
 	$dichvu->MaDichVu = $_POST['MaDichVu'];
 	$dichvu->TenDichVu = $_POST['TenDichVu'];
 	$dichvu->MaCoSo = $_POST['MaCoSo'];
@@ -13,6 +12,6 @@ if(isset($_GET['id']))
 	$dichvu->DonGia = $_POST['DonGia'];
 	$dichvu->save();
 
-
+	header("Location: ../dich-vu.php");
 }
 ?>

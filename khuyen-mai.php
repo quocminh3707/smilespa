@@ -6,21 +6,21 @@
 ?>
 <div class="page-header">
     <h1>
-        Dịch vụ
+        Khuyến mãi
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            Danh sách dịch vụ
+            Danh sách khuyến mãi
         </small>
     </h1>
 </div>
-<form id='form-delete-selected' action='dichvu/delete-selected.php' method='post'>
+<form id='form-delete-selected' action='khuyenmai/delete-selected.php' method='post'>
 	
 	<div class="pull-right mr-bottom" >
-		<a href="#create-dichvu" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
+		<a href="#create-khuyenmai" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
 				<i class="ace-icon fa fa-plus bigger-120"></i>
 				Thêm
 		</a>
-		<a href="#del-dichvu" role="button" class="btn btn-xs btn-danger btn-delete-selected">
+		<a href="#del-khuyenmai" role="button" class="btn btn-xs btn-danger btn-delete-selected">
 				<i class="ace-icon fa fa-trash-o bigger-120"></i>
 				Xóa
 		</a>
@@ -35,11 +35,12 @@
 						<span class="lbl"></span>
 					</label>
 				</th>
-				<th class="center">Mã dịch vụ</th>
-				<th class="center">Tên dịch vụ</th>
-				<th class="center">Tình trạng</th>
-				<th class="center">Tên cơ sở</th>
-				<th class="center">Đơn giá hiện tại</th>
+				<th class="center">Mã khuyến mãi</th>
+				<th class="center">Tên khuyến mãi</th>
+				<th class="center">Số tiền</th>
+				<th class="center">Phần trăm</th>
+				<th class="center">Loại khuyến mãi</th>
+				<th class="center">Cơ sở</th>
 				<th>
 				</th>
 			</tr>
@@ -48,8 +49,8 @@
 				
 				
 				<?php
-				$all_dichvu= Model_DichVu::all()->toArray();
-				 foreach($all_dichvu as $row)
+				$all_khuyenmai= Model_DichVu::all()->toArray();
+				 foreach($all_khuyenmai as $row)
 				 {
 				   ?>	
 							<tr>
@@ -59,37 +60,28 @@
 									<span class="lbl"></span>
 								</label>
 							</th>
-							<td class="text-center"><?php echo $row['MaDichVu']; ?></td>
-							<td class="text-center"><?php echo $row['TenDichVu']; ?></td>
-							
-							<td class="text-center">
-							<?php 
-								$coso = $row['TinhTrang'];
-								if($coso == 0 ){
-									echo "Đang sử dụng";
-								}else{
-									echo "Hết sử dụng";
-								}
-								?>
-							</td>
+							<td class="text-center"><?php echo $row['MaKM']; ?></td>
+							<td class="text-center"><?php echo $row['TenKM']; ?></td>
+							<td class="text-center"><?php echo $row['SoTien']; ?></td>
+							<td class="text-center"><?php echo $row['PhanTram']; ?></td>
+							<td class="text-center"><?php echo $row['LoaiKM']; ?></td>
 							<td class="text-center">
 								<?php 
-								$coso = $row['MaCoSo'];
-								if($coso == "CS1" ){
+								$coso = $row['CoSo_id'];
+								if($coso == "0" ){
 									echo "Cơ sở Huế";
 								}else{
 									echo "Cơ sở Sài Gòn";
 								}
 								?>
 							</td>
-							<td class="text-center"><?php echo $row['DonGia']; ?></td>
 							<td class="text-center">
 								<div class="btn-group">
-									<a href="#edit-dichvu" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaDichVu'] ?>" class="btn btn-xs btn-info btn-edit">
+									<a href="#edit-khuyenmai" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaKM'] ?>" class="btn btn-xs btn-info btn-edit">
 											<i class="ace-icon fa fa-pencil bigger-120"></i>
 											Sữa
 									</a>
-									<a href="#del-dichvu" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaDichVu'] ?>" class="btn btn-xs btn-danger btn-delete">
+									<a href="#del-khuyenmai" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaKM'] ?>" class="btn btn-xs btn-danger btn-delete">
 											<i class="ace-icon fa fa-trash-o bigger-120"></i>
 											Xóa
 									</a>
@@ -107,14 +99,14 @@
 
 
 </form>
-<div id="create-dichvu" class="modal fade" tabindex="-1">
+<div id="create-khuyenmai" class="modal fade" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 					<h4 class="modal-title" id="modalTitle">Thêm mới</h4>
 				</div>
-				<form id="form-validate-create" method="post" action="DichVu/create.php" class="form-horizontal cmxform" novalidate="novalidate">
+				<form id="form-validate-create" method="post" action="khuyenmai/create.php" class="form-horizontal cmxform" novalidate="novalidate">
 					<input type="hidden" name="IDHidden" id="IDHidden" value="">
 					<div class="modal-body">
 						<div class="form-group">
@@ -166,7 +158,7 @@
 
 
 
-<div id="del-dichvu" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
+<div id="del-khuyenmai" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -183,14 +175,14 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="edit-dichvu" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
+<div id="edit-khuyenmai" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 				<h4 class="modal-title" id="modalTitle">Chỉnh sữa</h4>
 			</div>
-			<form id="form-validate-edit" method="post" action="DichVu/edit.php" class="form-horizontal cmxform" novalidate="novalidate">
+			<form id="form-validate-edit" method="post" action="khuyenmai/edit.php" class="form-horizontal cmxform" novalidate="novalidate">
 				<input type="hidden" name="id" id="IDHidden2" value="">
 				<div class="modal-body">
 					<div class="form-group">
@@ -242,7 +234,7 @@
 <script>		
  function edit_ajax(id) {
         $.ajax({
-            url: 'dichvu/get.php?id=' + id,
+            url: 'khuyenmai/get.php?id=' + id,
             type: 'GET',
             dataType: 'html',
             error: function () {
@@ -265,13 +257,13 @@
     }
 	function del(id, name) {
         $('#msg-delete').html('Bạn có chắc chắn muốn xóa khách hàng <b>' + name + '</b> không?');
-        $('#msg-link').attr('href', 'dichvu/delete.php?id=' + id);
-        $('#del-dichvu').modal();
+        $('#msg-link').attr('href', 'khuyenmai/delete.php?id=' + id);
+        $('#del-khuyenmai').modal();
     }
 // $(document).ready(function () {
         $('.btn-edit').click(function (e) {
             edit_ajax($(this).attr('data-id'));
-            $('#edit-dichvu').modal();
+            $('#edit-khuyenmai').modal();
        });
         // $('.btn-create').click(function (e) {
             // create();

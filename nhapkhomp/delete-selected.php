@@ -6,6 +6,7 @@ if(isset($_POST['selected'])){
 	foreach($_POST['selected'] as $id){
 		$dichvu = Model_DichVu::find($id);
 		$dichvu->delete();
-	}	
+	}
+
+	header("Location: ../dich-vu.php"); 
 }
-header("Location: ../dich-vu.php"); 
