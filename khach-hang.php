@@ -52,7 +52,7 @@
 				 foreach($all_khachhang as $row)
 				 {
 				   ?>	
-							<tr>
+							<tr data-user-id='<?php echo $row['id'] ?>'>
 							<th class="center">
 							<label class="pos-rel">
 									<input type="checkbox" class='row-select' name='selected[]' value='<?php echo $row['id'] ?>' class="ace">
@@ -61,11 +61,12 @@
 							</th>
 							<td class="center">
 								<div class="action-buttons ui-pg-div">
-								<span class="ui-icon ace-icon fa fa-plus-circle purple"></span>
-								<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-									<i class="ace-icon fa fa-angle-double-down"></i>
-									<span class="sr-only">Details</span>
-								</a>
+									<a href='#dangky' class="btn-dangky-dichvu ui-icon ace-icon fa fa-plus-circle purple"></button>
+
+									<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
+										<i class="ace-icon fa fa-angle-double-down"></i>
+										<span class="sr-only">Details</span>
+									</a>
 								</div>
 							</td>
 							<td class="text-center"><?php echo "<a href='dangky-dichvu/dangky-dichvu.php' target='_blank'>".$row['Ho'];echo "&nbsp";echo $row['Ten'].'</a>'; ?></td>
@@ -343,5 +344,6 @@
 </script>		
 					<!-- PAGE CONTENT ENDS -->
 <?php  
-	require './template-bottom.php'; 
+	require DIRECT_DIR . 'dangky-dichvu/modal.php';
+	require DIRECT_DIR . 'template-bottom.php'; 
 ?>

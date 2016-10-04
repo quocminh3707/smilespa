@@ -114,7 +114,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 					<h4 class="modal-title" id="modalTitle">Thêm mới</h4>
 				</div>
-				<form id="form-validate-create" method="post" action="DichVu/create.php" class="form-horizontal cmxform" novalidate="novalidate">
+				<form id="form-validate-create" method="post" action="dichvu/create.php" class="form-horizontal cmxform" novalidate="novalidate">
 					<input type="hidden" name="IDHidden" id="IDHidden" value="">
 					<div class="modal-body">
 						<div class="form-group">
@@ -147,12 +147,41 @@
 								</select>
 							</div>
 						</div>
+						
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right">Đơn giá</label>
+							<label class="col-sm-3 control-label no-padding-right">Hinh thuc</label>
 							<div class="col-sm-9">
-								<input type="text" name="DonGia" id="DonGia" value="" placeholder="Đơn giá" class="form-control required" aria-required="true">
+								<input type="radio" name="hinhthuc" value='0' checked=""> Buoi le
+								<input type="radio" name="hinhthuc" value='1'> Lieu trinh
 							</div>
 						</div>
+						<div class="form-group" id='tab-BuoiLe'>
+							<label class="col-sm-3 control-label no-padding-right">Don gia</label>
+							<div class="col-sm-9">
+								<input type="text" name="BuoiLe[DonGia]" value="" class="form-control required" aria-required="true">
+							</div>
+						</div>
+						<div class="form-group hide" id='tab-LieuTrinh'>
+							<label class="col-sm-3 control-label no-padding-right">
+								<button type='button' class='btn-add-lieutrinh btn btn-primary'>+</button>
+							</label>
+							<div class="col-sm-9" id='listLieuTrinh'>
+								<div class='row lieu-trinh-row'>
+									<div class='col-md-6'>
+										<input type="text" name="LieuTrinh[DonGia][]" value="" placeholder="Đơn giá" class="form-control required" aria-required="true">
+									</div>		
+									<div class='col-md-4'>
+										<input type="text" name="LieuTrinh[SoBuoi][]" value="" placeholder="So buoi" class="form-control required" aria-required="true">
+									</div>
+									<div class='col-md-2'>
+										<a href='#delete' class='btn-delete-lieutrinh'>x</a>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+
+
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal"><i class="ace-icon fa fa-times"></i>Đóng</button>
@@ -320,6 +349,25 @@
                 }
             }
         })
+        $(".btn-add-lieutrinh").click(function(){
+        	$('#listLieuTrinh').append("<div class='row lieu-trinh-row'><div class='col-md-6'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-4'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
+        });
+        $(document.body).on('click', '.btn-delete-lieutrinh', function() {
+        	if($('.lieu-trinh-row').length > 1){
+        		$(this).closest('.lieu-trinh-row').remove();
+        	}
+		    
+		});
+		$('#create-dichvu input[name="hinhthuc"]').change(function(){
+			var value = parseInt($(this).val());
+			if(value == 1){
+				$('#tab-BuoiLe').addClass('hide');
+				$('#tab-LieuTrinh').removeClass('hide');
+			}else{
+				$('#tab-BuoiLe').removeClass('hide');
+				$('#tab-LieuTrinh').addClass('hide');
+			}
+		});
 </script>		
 					<!-- PAGE CONTENT ENDS -->
 <?php  
