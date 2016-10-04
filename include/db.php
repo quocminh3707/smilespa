@@ -9,10 +9,10 @@
 
 	$capsule->addConnection([
 	    'driver'    => 'mysql',
-	    'host'      => 'localhost',
-	    'database'  => 'smilespa',
-	    'username'  => 'root',
-	    'password'  => '',
+	    'host'      => '103.48.81.49',
+	    'database'  => 'trxsasvq_smile',
+	    'username'  => 'trxsasvq_smile',
+	    'password'  => 'SmileSpa2016',
 	    'charset'   => 'utf8',
 	    'collation' => 'utf8_unicode_ci',
 	    'prefix'    => '',
