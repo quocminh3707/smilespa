@@ -52,7 +52,7 @@
 				 foreach($all_dichvu as $row)
 				 {
 				   ?>	
-							<tr>
+							<tr data-id="<?php echo $row['id'] ?>">
 							<th class="center">
 							<label class="pos-rel">
 									<input type="checkbox" class='row-select' name='selected[]' value='<?php echo $row['id'] ?>' class="ace">
@@ -193,8 +193,6 @@
 </div>
 
 
-
-
 <div id="del-dichvu" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -215,55 +213,7 @@
 <div id="edit-dichvu" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-				<h4 class="modal-title" id="modalTitle">Chỉnh sữa</h4>
-			</div>
-			<form id="form-validate-edit" method="post" action="DichVu/edit.php" class="form-horizontal cmxform" novalidate="novalidate">
-				<input type="hidden" name="id" id="IDHidden2" value="">
-				<div class="modal-body">
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Mã dịch vụ</label>
-						<div class="col-sm-9">
-							<input type="text" name="MaDichVu" id="MaDichVu2" value="" placeholder="Mã dịch vụ" class="form-control required" aria-required="true">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Tên dịch vụ</label>
-						<div class="col-sm-9">
-							<input type="text" name="TenDichVu" id="TenDichVu2" value="" placeholder="Tên dịch vụ" class="form-control required" aria-required="true">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Tình trạng</label>
-						<div class="col-sm-9">
-							<select name="TinhTrang" id="TinhTrang2" class="form-control required" placeholder="Tình trạng" aria-required="true">
-								<option value="0">Đang sử dụng</option>
-								<option value="1">Hết sử dụng</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group" style="display: none;">
-						<label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
-						<div class="col-sm-9">
-							<select name="MaCoSo" id="MaCoSo2" class="form-control required" placeholder="Cơ sở" aria-required="true">
-								<option value="CS1">Cơ sở Huế</option>
-								<option value="CS2">Cơ sở Sài Gòn</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Đơn giá</label>
-						<div class="col-sm-9">
-							<input type="text" name="DonGiaED" id="DonGia2" value="" placeholder="Đơn giá" class="form-control required" aria-required="true">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal"><i class="ace-icon fa fa-times"></i>Đóng</button>
-					<button type="submit" name="submit" class="btn btn-sm btn-primary pull-right">Lưu</button>
-				</div>
-			</form>
+			
 		</div>
 	</div>
 </div>
@@ -298,10 +248,19 @@
         $('#del-dichvu').modal();
     }
 // $(document).ready(function () {
-        $('.btn-edit').click(function (e) {
-            edit_ajax($(this).attr('data-id'));
-            $('#edit-dichvu').modal();
-       });
+		$(document.body).on('click', '.btn-edit', function() {
+        	var id = $(this).closest('tr').attr('data-id');
+        	$('#edit-dichvu .modal-content').html('...');
+        	$('#edit-dichvu').modal('show');
+        	$.ajax({
+        		url: "dichvu/edit-get.php?id=" + id,
+        		type: 'get',
+        		success: function(result){
+        			$('#edit-dichvu .modal-content').html(result);
+        		}
+        	});
+		    
+		});
         // $('.btn-create').click(function (e) {
             // create();
         // });
@@ -352,6 +311,11 @@
         $(".btn-add-lieutrinh").click(function(){
         	$('#listLieuTrinh').append("<div class='row lieu-trinh-row'><div class='col-md-6'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-4'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
         });
+
+        $(document.body).on('click', '.btn-add-edit-lieutrinh', function() {
+        	$('#edit-listLieuTrinh').append("<div class='row lieu-trinh-row'><div class='col-md-6'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-4'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
+		    
+		});
         $(document.body).on('click', '.btn-delete-lieutrinh', function() {
         	if($('.lieu-trinh-row').length > 1){
         		$(this).closest('.lieu-trinh-row').remove();
@@ -368,6 +332,17 @@
 				$('#tab-LieuTrinh').addClass('hide');
 			}
 		});
+		$('#edit-dichvu input[name="hinhthuc"]').change(function(){
+			var value = parseInt($(this).val());
+			if(value == 1){
+				$('#edit-tab-BuoiLe').addClass('hide');
+				$('#tab-LieuTrinh').removeClass('hide');
+			}else{
+				$('#edit-tab-BuoiLe').removeClass('hide');
+				$('#edit-tab-LieuTrinh').addClass('hide');
+			}
+		});
+
 </script>		
 					<!-- PAGE CONTENT ENDS -->
 <?php  
