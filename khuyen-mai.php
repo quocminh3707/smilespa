@@ -31,15 +31,13 @@
 			<tr>
 				<th class="center">
 					<label class="pos-rel">
-						<input type="checkbox" id='select-all' class="ace">
+						<input type="checkbox" id='select-all' class="">
 						<span class="lbl"></span>
 					</label>
 				</th>
 				<th class="center">Mã khuyến mãi</th>
-				<th class="center">Tên khuyến mãi</th>
-				<th class="center">Số tiền</th>
-				<th class="center">Phần trăm</th>
 				<th class="center">Loại khuyến mãi</th>
+				<th class="center">Tên khuyến mãi</th>
 				<th class="center">Cơ sở</th>
 				<th>
 				</th>
@@ -49,7 +47,7 @@
 				
 				
 				<?php
-				$all_khuyenmai= Model_DichVu::all()->toArray();
+				$all_khuyenmai= Model_KhuyenMai::all()->toArray();
 				 foreach($all_khuyenmai as $row)
 				 {
 				   ?>	
@@ -61,10 +59,29 @@
 								</label>
 							</th>
 							<td class="text-center"><?php echo $row['MaKM']; ?></td>
-							<td class="text-center"><?php echo $row['TenKM']; ?></td>
-							<td class="text-center"><?php echo $row['SoTien']; ?></td>
-							<td class="text-center"><?php echo $row['PhanTram']; ?></td>
-							<td class="text-center"><?php echo $row['LoaiKM']; ?></td>
+							<td class="text-center">
+								<?php  
+									$sotien = $row['SoTien'];
+									$phantram = $row['PhanTram'];
+									if($sotien == 0 & $phantram != 0){
+
+										echo $phantram."%";
+									}else{
+										echo number_format($sotien, '0', '.', '.').' VNĐ';
+										
+									}
+								?>
+							</td>
+							<td class="text-center">
+								<?php 
+								$TenKM = $row['TenKM'];
+								if($TenKM == "1" ){
+									echo "Khuyến mãi tiền mặt";
+								}else{
+									echo "Khuyến mãi phần trăm";
+								}
+								?>
+							</td>
 							<td class="text-center">
 								<?php 
 								$coso = $row['CoSo_id'];
@@ -100,63 +117,63 @@
 
 </form>
 <div id="create-khuyenmai" class="modal fade" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-					<h4 class="modal-title" id="modalTitle">Thêm mới</h4>
-				</div>
-				<form id="form-validate-create" method="post" action="khuyenmai/create.php" class="form-horizontal cmxform" novalidate="novalidate">
-					<input type="hidden" name="IDHidden" id="IDHidden" value="">
-					<div class="modal-body">
-						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right">Mã dịch vụ</label>
-							<div class="col-sm-9">
-								<input type="text" name="MaDichVu" id="MaDichVu" value="" placeholder="Mã dịch vụ" class="form-control required" aria-required="true">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right">Tên dịch vụ</label>
-							<div class="col-sm-9">
-								<input type="text" name="TenDichVu" id="TenDichVu" value="" placeholder="Tên dịch vụ" class="form-control required" aria-required="true">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right">Tình trạng</label>
-							<div class="col-sm-9">
-								<select name="TinhTrang" id="TinhTrang" class="form-control required" placeholder="Tình trạng" aria-required="true">
-									<option value="0">Đang sử dụng</option>
-									<option value="1">Hết sử dụng</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group" style="display: none;">
-							<label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
-							<div class="col-sm-9">
-								<select name="MaCoSo" id="MaCoSo" class="form-control required" placeholder="Cơ sở" aria-required="true">
-									<option value="CS1">Cơ sở Huế</option>
-									<option value="CS2">Cơ sở Sài Gòn</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right">Đơn giá</label>
-							<div class="col-sm-9">
-								<input type="text" name="DonGia" id="DonGia" value="" placeholder="Đơn giá" class="form-control required" aria-required="true">
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal"><i class="ace-icon fa fa-times"></i>Đóng</button>
-						<button type="submit" name="submit" class="btn btn-sm btn-primary pull-right">Lưu</button>
-					</div>
-				</form>
-			</div>
-		</div>
+		<div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="modalTitle">Thêm mới</h4>
+            </div>
+            <form id="form-validate-create" method="post" action="khuyenmai/create.php" class="form-horizontal" novalidate="novalidate">
+                <div class="modal-body">
+                    <input type="hidden" name="IDHidden" id="IDHidden" value="">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right">Mã khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="MaKM" id="MaKM" value="" placeholder="Mã khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right">Loại khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <select name="TenKM" id="TenKM" class="form-control required" onchange="khuyenmai(this.value);" aria-required="true">
+                                <option value="1" selected>Khuyến mãi tiền mặt</option>
+								<option value="2">Khuyến mãi phần trăm</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="khuyenmai-tien">
+                        <label class="col-sm-4 control-label no-padding-right">Tiền khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="SoTien" id="SoTien" value="" placeholder="Tiền khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group" id="khuyenmai-phantram" style="display: none;">
+                        <label class="col-sm-4 control-label no-padding-right">Phần trăm khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="PhanTram" id="PhanTram" value="" placeholder="Phần trăm khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <label class="col-sm-4 control-label no-padding-right">Mã cơ sở</label>
+                        <div class="col-sm-8">
+                            <select name="CoSo_id" id="CoSo_id" class="form-control required" aria-required="true">
+                                <option value="CS1">Cơ sở Huế</option>
+								<option value="CS2">Cơ sở Sài Gòn</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" name="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div>
 </div>
-
-
-
 
 <div id="del-khuyenmai" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
@@ -175,143 +192,165 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="edit-khuyenmai" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
-    <div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-				<h4 class="modal-title" id="modalTitle">Chỉnh sữa</h4>
-			</div>
-			<form id="form-validate-edit" method="post" action="khuyenmai/edit.php" class="form-horizontal cmxform" novalidate="novalidate">
-				<input type="hidden" name="id" id="IDHidden2" value="">
-				<div class="modal-body">
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Mã dịch vụ</label>
-						<div class="col-sm-9">
-							<input type="text" name="MaDichVu" id="MaDichVu2" value="" placeholder="Mã dịch vụ" class="form-control required" aria-required="true">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Tên dịch vụ</label>
-						<div class="col-sm-9">
-							<input type="text" name="TenDichVu" id="TenDichVu2" value="" placeholder="Tên dịch vụ" class="form-control required" aria-required="true">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Tình trạng</label>
-						<div class="col-sm-9">
-							<select name="TinhTrang" id="TinhTrang2" class="form-control required" placeholder="Tình trạng" aria-required="true">
-								<option value="0">Đang sử dụng</option>
-								<option value="1">Hết sử dụng</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group" style="display: none;">
-						<label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
-						<div class="col-sm-9">
-							<select name="MaCoSo" id="MaCoSo2" class="form-control required" placeholder="Cơ sở" aria-required="true">
-								<option value="CS1">Cơ sở Huế</option>
+<div id="edit-khuyenmai" class="modal fade" tabindex="-1">
+		<div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="modalTitle">Chỉnh sữa</h4>
+            </div>
+            <form id="form-validate-edit" method="post" action="khuyenmai/edit.php" class="form-horizontal" novalidate="novalidate">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="IDHidden2" value="">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right">Mã khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="MaKM" id="MaKM2" value="" placeholder="Mã khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right">Loại khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <select name="TenKM" id="TenKM2" class="form-control required" onchange="khuyenmaiED(this.value);" aria-required="true">
+                                <option value="1">Khuyến mãi tiền mặt</option>
+								<option value="2">Khuyến mãi phần trăm</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="khuyenmai-tienED">
+                        <label class="col-sm-4 control-label no-padding-right">Tiền khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="SoTien" id="SoTien2" value="" placeholder="Tiền khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group" id="khuyenmai-phantramED" style="display: none;">
+                        <label class="col-sm-4 control-label no-padding-right">Phần trăm khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="PhanTram" id="PhanTram2" value="" placeholder="Phần trăm khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <label class="col-sm-4 control-label no-padding-right">Mã cơ sở</label>
+                        <div class="col-sm-8">
+                            <select name="CoSo_id" id="CoSo_id2" class="form-control required" aria-required="true">
+                                <option value="CS1">Cơ sở Huế</option>
 								<option value="CS2">Cơ sở Sài Gòn</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Đơn giá</label>
-						<div class="col-sm-9">
-							<input type="text" name="DonGiaED" id="DonGia2" value="" placeholder="Đơn giá" class="form-control required" aria-required="true">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal"><i class="ace-icon fa fa-times"></i>Đóng</button>
-					<button type="submit" name="submit" class="btn btn-sm btn-primary pull-right">Lưu</button>
-				</div>
-			</form>
-		</div>
-	</div>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" name="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div>
 </div>
 
 <script>		
  function edit_ajax(id) {
-        $.ajax({
-            url: 'khuyenmai/get.php?id=' + id,
-            type: 'GET',
-            dataType: 'html',
-            error: function () {
-                alert('Ajax error!');
-            },
-            success: function (json) {
-                $('#modalTitle').html('Chỉnh sửa');
-                var obj = jQuery.parseJSON(json);
-                if (obj == null) {
-                    alert('Không lấy được dữ liệu! Xin vui lòng thử lại sau!');
-                } else {
-                	$('#IDHidden2').val(obj.id);
-                    $('#MaDichVu2').val(obj.MaDichVu);
-                    $('#TenDichVu2').val(obj.TenDichVu);
-                    $('#TinhTrang2').val(obj.TinhTrang);
-                    $('#DonGia2').val(obj.DonGia);
-                }
+    $.ajax({
+        url: 'khuyenmai/get.php?id=' + id,
+        type: 'GET',
+        dataType: 'html',
+        error: function () {
+            alert('Ajax error!');
+        },
+        success: function (json) {
+            $('#modalTitle').html('Chỉnh sửa');
+            var obj = jQuery.parseJSON(json);
+            if (obj == null) {
+                alert('Không lấy được dữ liệu! Xin vui lòng thử lại sau!');
+            } else {
+            	$('#IDHidden2').val(obj.id);
+                $('#MaKM2').val(obj.MaKM);
+                $('#TenKM2').val(obj.TenKM);
+                $('#SoTien2').val(obj.SoTien);
+                $('#PhanTram2').val(obj.PhanTram);
+                $('#CoSo_id2').val(obj.CoSo_id);
             }
-        });
+        }
+    });
     }
 	function del(id, name) {
         $('#msg-delete').html('Bạn có chắc chắn muốn xóa khách hàng <b>' + name + '</b> không?');
         $('#msg-link').attr('href', 'khuyenmai/delete.php?id=' + id);
         $('#del-khuyenmai').modal();
     }
-// $(document).ready(function () {
-        $('.btn-edit').click(function (e) {
-            edit_ajax($(this).attr('data-id'));
-            $('#edit-khuyenmai').modal();
-       });
-        // $('.btn-create').click(function (e) {
-            // create();
-        // });
-        // $('.btn-delete').click(function (e) {
-            // del($(this).data('objid'), $(this).data('objname'));
-        // });
-        // $('#form-validate').validate();
-    // });
-		$('.btn-delete').click(function (e) {
-			var name = $(this).attr('data-name');
-			var id = $(this).attr('data-id');
-            del(id, name);
-        });
-        $('#select-all').click(function(){
-        	if($(this).is(':checked')){
-        		$('.row-select').prop('checked', true);
-        	}else{
-				$('.row-select').prop('checked', false);
-        	}
-        });
-        $('.btn-delete-selected').click(function(){
-        	swal({   
-        		title: "Vui lòng chọn loại dịch vụ?",   
-        		type: "warning",   
-        		showCancelButton: true,   
-        		confirmButtonText: "Đồng ý xóa!",   
-        		closeOnConfirm: false,   
-        	}, function(isConfirm){ 
-        		if(isConfirm){
-        			$('#form-delete-selected').submit();	
-        		}
-        	});
-        });
-        $('#form-validate-create').validate({
-        	rules: {
-        		DonGia:{
-    				number: true,
-        		}
-        	}
-        });
-        $('#form-validate-edit').validate({
-            rules: {
-                DonGiaED: {
-                    number: true,
-                }
-            }
-        })
+    $('.btn-edit').click(function (e) {
+        edit_ajax($(this).attr('data-id'));
+        $('#edit-khuyenmai').modal();
+   });
+	$('.btn-delete').click(function (e) {
+		var name = $(this).attr('data-name');
+		var id = $(this).attr('data-id');
+        del(id, name);
+    });
+    $('#select-all').click(function(){
+    	if($(this).is(':checked')){
+    		$('.row-select').prop('checked', true);
+    	}else{
+			$('.row-select').prop('checked', false);
+    	}
+    });
+    $('.btn-delete-selected').click(function(){
+    	swal({   
+    		title: "Vui lòng chọn loại dịch vụ?",   
+    		type: "warning",   
+    		showCancelButton: true,   
+    		confirmButtonText: "Đồng ý xóa!",   
+    		closeOnConfirm: false,   
+    	}, function(isConfirm){ 
+    		if(isConfirm){
+    			$('#form-delete-selected').submit();	
+    		}
+    	});
+    });
+    $('#form-validate-create').validate({
+    	rules: {
+    		MaKM:{
+    			require: true,
+    		},
+    		SoTien:{
+    			number: true,
+    		},
+    		PhanTram:{
+    			number: true,
+    		}
+    	}
+    });
+    function khuyenmai(loaikhuyenmai) {
+	    if (loaikhuyenmai == 1) {
+	        //Khuyến mãi tiền mặt
+	        $('#khuyenmai-tien').show();
+	        $('#PhanTram').val('');
+	        $('#khuyenmai-phantram').hide();
+	    } else {
+	        //Khuyến mãi phần trăm
+	        $('#SoTien').val('');
+	        $('#khuyenmai-tien').hide();
+	        $('#khuyenmai-phantram').show();
+	    }
+
+    }
+    function khuyenmaiED(loaikhuyenmai) {
+	    if (loaikhuyenmai == 1) {
+	        //Khuyến mãi tiền mặt
+	        $('#khuyenmai-tienED').show();
+	        $('#PhanTram2').val('');
+	        $('#khuyenmai-phantramED').hide();
+	    } else {
+	        //Khuyến mãi phần trăm
+	        $('#SoTien2').val('');
+	        $('#khuyenmai-tienED').hide();
+	        $('#khuyenmai-phantramED').show();
+	    }
+
+    }
 </script>		
 					<!-- PAGE CONTENT ENDS -->
 <?php  

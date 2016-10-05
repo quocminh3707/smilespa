@@ -2,16 +2,15 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 
+
 if (isset($_POST['submit'])) {
+	$khuyenmai = new Model_KhuyenMai();
+	$khuyenmai->MaKM = $_POST['MaKM'];
+	$khuyenmai->TenKM = $_POST['TenKM'];
+	$khuyenmai->PhanTram = $_POST['PhanTram'];
+	$khuyenmai->SoTien = $_POST['SoTien'];
+	$khuyenmai->save();
 
-	$dichvu = new Model_DichVu();
-	$dichvu->MaDichVu = $_POST['MaDichVu'];
-	$dichvu->TenDichVu = $_POST['TenDichVu'];
-	$dichvu->MaCoSo = $_POST['MaCoSo'];
-	$dichvu->TinhTrang = $_POST['TinhTrang'];
-	$dichvu->DonGia = $_POST['DonGia'];
-	$dichvu->save();
-
-	header("Location: ../dich-vu.php");
+	header("Location: ../khuyen-mai.php");
 }
 ?>

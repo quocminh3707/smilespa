@@ -35,7 +35,7 @@
 						<span class="lbl"></span>
 					</label>
 				</th>
-				<th class="center">Dịch vụ</th>
+				<th class="center">Thêm Dịch vụ</th>
 				<th class="center">Họ tên</th>
 				<th class="center">Số điện thoại</th>
 				<th class="center">Email</th>
@@ -60,18 +60,15 @@
 								</label>
 							</th>
 							<td class="center">
-														<div class="action-buttons">
-														<a href="#create-DVkhachhang" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
-				<i class="ace-icon fa fa-plus bigger-120"></i>
-				Thêm
-		</a>
-															<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-																<i class="ace-icon fa fa-angle-double-down"></i>
-																<span class="sr-only">Details</span>
-															</a>
-														</div>
-													</td>
-							<td class="text-center"><?php echo $row['Ho'];echo "&nbsp";echo $row['Ten']; ?></td>
+								<div class="action-buttons ui-pg-div">
+								<span class="ui-icon ace-icon fa fa-plus-circle purple"></span>
+								<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
+									<i class="ace-icon fa fa-angle-double-down"></i>
+									<span class="sr-only">Details</span>
+								</a>
+								</div>
+							</td>
+							<td class="text-center"><?php echo "<a href='dangky-dichvu/dangky-dichvu.php' target='_blank'>".$row['Ho'];echo "&nbsp";echo $row['Ten'].'</a>'; ?></td>
 							<td class="text-center"><?php echo $row['Sdt']; ?></td>
 							<td class="text-center"><?php echo $row['Email']; ?></td>
 							<td class="text-center"><?php echo $row['DiaChi']; ?></td>
@@ -99,110 +96,9 @@
 								</div>
 							</td>
 							<tr class="detail-row">
-													<td colspan="8">
-														<div class="table-detail">
-															<div class="row">
-																<div class="col-xs-12 col-sm-2">
-																	<div class="text-center">
-																		<img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owner's Avatar" src="assets/images/avatars/profile-pic.jpg">
-																		<br>
-																		<div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
-																			<div class="inline position-relative">
-																				<a class="user-title-label" href="#">
-																					<i class="ace-icon fa fa-circle light-green"></i>
-																					&nbsp;
-																					<span class="white">Alex M. Doe</span>
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="col-xs-12 col-sm-7">
-																	<div class="space visible-xs"></div>
-
-																	<div class="profile-user-info profile-user-info-striped">
-																		<div class="profile-info-row">
-																			<div class="profile-info-name"> Username </div>
-
-																			<div class="profile-info-value">
-																				<span>alexdoe</span>
-																			</div>
-																		</div>
-
-																		<div class="profile-info-row">
-																			<div class="profile-info-name"> Location </div>
-
-																			<div class="profile-info-value">
-																				<i class="fa fa-map-marker light-orange bigger-110"></i>
-																				<span>Netherlands, Amsterdam</span>
-																			</div>
-																		</div>
-
-																		<div class="profile-info-row">
-																			<div class="profile-info-name"> Age </div>
-
-																			<div class="profile-info-value">
-																				<span>38</span>
-																			</div>
-																		</div>
-
-																		<div class="profile-info-row">
-																			<div class="profile-info-name"> Joined </div>
-
-																			<div class="profile-info-value">
-																				<span>2010/06/20</span>
-																			</div>
-																		</div>
-
-																		<div class="profile-info-row">
-																			<div class="profile-info-name"> Last Online </div>
-
-																			<div class="profile-info-value">
-																				<span>3 hours ago</span>
-																			</div>
-																		</div>
-
-																		<div class="profile-info-row">
-																			<div class="profile-info-name"> About Me </div>
-
-																			<div class="profile-info-value">
-																				<span>Bio</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="col-xs-12 col-sm-3">
-																	<div class="space visible-xs"></div>
-																	<h4 class="header blue lighter less-margin">Send a message to Alex</h4>
-
-																	<div class="space-6"></div>
-
-																	<form>
-																		<fieldset>
-																			<textarea class="width-100" resize="none" placeholder="Type something…"></textarea>
-																		</fieldset>
-
-																		<div class="hr hr-dotted"></div>
-
-																		<div class="clearfix">
-																			<label class="pull-left">
-																				<input type="checkbox" class="ace">
-																				<span class="lbl"> Email me a copy</span>
-																			</label>
-
-																			<button class="pull-right btn btn-sm btn-primary btn-white btn-round" type="button">
-																				Submit
-																				<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
-																			</button>
-																		</div>
-																	</form>
-																</div>
-															</div>
-														</div>
-													</td>
-												</tr>
+								<?php
+									require $_SERVER['DOCUMENT_ROOT'] . '/spa/dangky-dichvu/dangky-dichvu.php';
+								?>
 							</tr>
 							<?php
 				 }

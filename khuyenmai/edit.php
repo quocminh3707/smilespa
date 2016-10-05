@@ -5,14 +5,14 @@ print_r($_POST);
 if(isset($_POST['id']))
 {
 
-	$dichvu = Model_DichVu::find($_POST['id']);
-	$dichvu->MaDichVu = $_POST['MaDichVu'];
-	$dichvu->TenDichVu = $_POST['TenDichVu'];
-	$dichvu->MaCoSo = $_POST['MaCoSo'];
-	$dichvu->TinhTrang = $_POST['TinhTrang'];
-	$dichvu->DonGia = $_POST['DonGiaED'];
-	$dichvu->save();
-
-	header("Location: ../dich-vu.php");
+	$khuyenmai = Model_KhuyenMai::find($_POST['id']);
+	$khuyenmai->MaKM = $_POST['MaKM'];
+	$khuyenmai->TenKM = $_POST['TenKM'];
+	$khuyenmai->PhanTram = $_POST['PhanTram'];
+	$khuyenmai->SoTien = $_POST['SoTien'];
+	$khuyenmai->CoSo_id = $_POST['CoSo_id'];
+	$khuyenmai->save();
+	header("Location: ../khuyen-mai.php");
 }
+
 ?>

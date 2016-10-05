@@ -4,6 +4,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 
 if (isset($_POST['submit'])) {
 
+	$dichvu = new Model_DichVu();
+
 	$khachhang = new Model_KhachHang();
 	$khachhang->Ho = $_POST['Ho'];
 	$khachhang->Ten = $_POST['Ten'];
