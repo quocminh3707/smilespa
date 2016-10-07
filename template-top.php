@@ -100,25 +100,25 @@
 					            Cơ sở Sài Gòn
 					                            <i class="ace-icon fa fa-caret-down"></i>
 					                    </a>
-					                    <ul class="dropdown-menu dropdown-menu-right">
-					                <li>
-					                    <div style="text-align: center; padding: 0 10px; white-space: nowrap;">
-					                        <form method="post" action="http://goldenlotushotel.vn/spa/CauHinh" class="form-inline">
-					                            <label for="nam" class="control-label inline" style="color: black; font-weight: bold; padding-left: 10px;">Chọn cơ sở: </label><br>
-					                            <select name="CauHinhCoSo" id="CauHinhCoSo" class="form-control required">
-					                                <option value="CS1">Cơ sở Huế</option>
-													<option value="CS2" selected="selected">Cơ sở Sài Gòn</option>
-					                            </select>
-					                            <button type="submit" class="btn btn-xs btn-primary">
-					                                <i class="ace-icon fa fa-check bigger-120"></i>
-					                            </button>
-					                            <button class="btn btn-xs btn-danger" type="button" onclick="$('#cauHinhTacNghiep').removeClass('open');">
-					                                <i class="ace-icon fa fa-ban bigger-120"></i>
-					                            </button>
-					                        </form>
-					                    </div>
-					                </li>
-					            </ul>
+					                    <ul id="CauHinh" class="dropdown-menu dropdown-menu-right">
+							                <li>
+							                    <div style="text-align: center; padding: 0 10px; white-space: nowrap;">
+							                        <form method="post" action="" class="form-inline">
+							                            <label for="nam" class="control-label inline" style="color: black; font-weight: bold; padding-left: 10px;">Chọn cơ sở: </label><br>
+							                            <select name="CauHinhCoSo" id="CauHinhCoSo" class="form-control required">
+							                                <option value="CS1">Cơ sở Huế</option>
+															<option value="CS2" selected="selected">Cơ sở Sài Gòn</option>
+							                            </select>
+							                            <button type="submit" class="btn btn-xs btn-primary">
+							                                <i class="ace-icon fa fa-check bigger-120"></i>
+							                            </button>
+							                            <button class="btn btn-xs btn-danger" type="button" onclick="$('#cauHinhTacNghiep').removeClass('open');">
+							                                <i class="ace-icon fa fa-ban bigger-120"></i>
+							                            </button>
+							                        </form>
+							                    </div>
+							                </li>
+							            </ul>
 			            </li>
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
@@ -156,3 +156,11 @@
 				</div>
 			</div><!-- /.navbar-container -->
 		</div>
+		<script>
+		$("#CauHinhCoSo").click(function(){
+			return false;
+		})
+		$("#CauHinh").click(function(){
+			return false;
+		})
+		</script>
