@@ -60,12 +60,6 @@
 						</a>
 					</li>
 					<li>
-						<a href="nhap-kho.php">
-							<i class="menu-icon fa fa-list"></i>
-							<span class="menu-text">Nhập kho mỹ phẩm</span>
-						</a>
-					</li>
-					<li>
 						<a href="dich-vu.php">
 							<i class="menu-icon fa fa-desktop"></i>
 							<span class="menu-text">Dịch vụ</span>

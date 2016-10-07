@@ -12,7 +12,7 @@
 				<th class="text-center">Tổng thanh toán</th>
 				<th class="text-center">Lần thanh toán</th>
 				<th class="text-center">Nợ lại</th>
-				<th class="text-center">Tình trạng</th>
+				<th class="text-center">Ghi chú</th>
 				<th></th>
 			</tr>
 		</thead>
