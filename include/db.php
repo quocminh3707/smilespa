@@ -1,5 +1,5 @@
 <?php
-	
+	session_start();
 	define('SOURCE_FOLDER', 'spa/');
 	define('DIRECT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/'. SOURCE_FOLDER);
 	require $_SERVER['DOCUMENT_ROOT'] . '/'.SOURCE_FOLDER.'vendor/autoload.php';

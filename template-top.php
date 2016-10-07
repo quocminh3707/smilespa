@@ -39,7 +39,7 @@
 		<link rel="stylesheet" href="assets/css/sweetalert.min.css" />
 
 		<script src="assets/js/sweetalert.min.js"></script>
-		<script type="text/javascript" src="assets/js/jquery.validate.spa.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
 		<script src="assets/js/ace-elements.min.js"></script>
 		<script src="assets/js/ace.min.js"></script>
 		<script src="assets/js/jquery.dataTables.min.js"></script>

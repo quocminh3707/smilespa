@@ -2,8 +2,7 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 
-echo "<pre>";
-print_r($_POST);
+
 
 if (isset($_POST['submit'])) {
 
@@ -38,6 +37,7 @@ if (isset($_POST['submit'])) {
 		}
 
 	}
+	$_SESSION['thongbao'] = "thanh cong";
 	header("Location: ../dich-vu.php");
 }
 ?>

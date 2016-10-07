@@ -51,10 +51,10 @@ $dichvu = Model_DichVu::find($_GET['id']);
 								<input type="radio" name="hinhthuc" value='1' <?php if($dichvu->hinhthuc) echo "checked" ?>> Lieu trinh
 							</div>
 					</div>
-					<div class="form-group <?php if($dichvu->hinhthuc) echo "hide" ?>" id='tab-edit-BuoiLe'>
+					<div class="form-group <?php if($dichvu->hinhthuc) echo "hide" ?>" id='edit-tab-BuoiLe'>
 							<label class="col-sm-3 control-label no-padding-right">Don gia</label>
 							<div class="col-sm-9">
-								<input type="text" name="BuoiLe[DonGia]" value="" class="form-control required" aria-required="true">
+								<input type="text" name="BuoiLe[DonGia]" value="<?php echo $dichvu->DonGia  ?>" class="form-control required" aria-required="true">
 							</div>
 						</div>
 						<div class="form-group <?php if(!$dichvu->hinhthuc) echo "hide" ?>" id='edit-tab-LieuTrinh'>
@@ -63,22 +63,39 @@ $dichvu = Model_DichVu::find($_GET['id']);
 							</label>
 							<div class="col-sm-9" id='edit-listLieuTrinh'>
 								<?php
-								$lieutrinhs = $dichvu->lieutrinhs;
-								foreach($lieutrinhs as $lieutrinh){
+								$lieutrinhs = $dichvu->lieutrinhs()->get();
+								if($lieutrinhs->isEmpty()){
 									?>
 									<div class='row lieu-trinh-row'>
-										<div class='col-md-6'>
-											<input type="text" name="LieuTrinh[DonGia][]" value="<?php echo $lieutrinh->dongia ?>" placeholder="Đơn giá" class="form-control required" aria-required="true">
-										</div>		
-										<div class='col-md-4'>
-											<input type="text" name="LieuTrinh[SoBuoi][]" value="<?php echo $lieutrinh->sobuoi ?>" placeholder="So buoi" class="form-control required" aria-required="true">
+											<div class='col-md-6'>
+												<input type="text" required="required" name="LieuTrinh[DonGia][]" value="" placeholder="Đơn giá" class="form-control required" aria-required="true">
+											</div>		
+											<div class='col-md-4'>
+												<input type="text" required="required" name="LieuTrinh[SoBuoi][]" value="" placeholder="So buoi" class="form-control required" aria-required="true">
+											</div>
+											<div class='col-md-2'>
+												<a href='#delete' class='btn-delete-lieutrinh'>x</a>
+											</div>
 										</div>
-										<div class='col-md-2'>
-											<a href='#delete' class='btn-delete-lieutrinh'>x</a>
-										</div>
-									</div>
 									<?php
+								}else{
+									foreach($lieutrinhs as $lieutrinh){
+										?>
+										<div class='row lieu-trinh-row'>
+											<div class='col-md-6'>
+												<input type="text" required="required" name="LieuTrinh[DonGia][]" value="<?php echo $lieutrinh->dongia ?>" placeholder="Đơn giá" class="form-control required" aria-required="true">
+											</div>		
+											<div class='col-md-4'>
+												<input type="text" required="required" name="LieuTrinh[SoBuoi][]" value="<?php echo $lieutrinh->sobuoi ?>" placeholder="So buoi" class="form-control required" aria-required="true">
+											</div>
+											<div class='col-md-2'>
+												<a href='#delete' class='btn-delete-lieutrinh'>x</a>
+											</div>
+										</div>
+										<?php
+									}
 								}
+								
 								?>
 								
 								
@@ -90,3 +107,12 @@ $dichvu = Model_DichVu::find($_GET['id']);
 					<button type="submit" name="submit" class="btn btn-sm btn-primary pull-right">Lưu</button>
 				</div>
 			</form>			
+<script type="text/javascript">
+	$('#form-validate-edit').validate({
+            rules: {
+            	
+            }
+        });
+	$('#edit-dichvu input[name="hinhthuc"]').change();
+</script>
+

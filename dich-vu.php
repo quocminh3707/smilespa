@@ -2,6 +2,10 @@
 	require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 	require DIRECT_DIR . 'template-top.php'; 
 	require DIRECT_DIR . 'template-left.php'; 
+	if(isset($_SESSION['thongbao'])){
+		echo $_SESSION['thongbao'];
+		unset($_SESSION['thongbao']);
+	}
 	
 ?>
 <div class="page-header">
@@ -268,6 +272,7 @@
         	var id = $(this).closest('tr').attr('data-id');
         	$('#edit-dichvu .modal-content').html('...');
         	$('#edit-dichvu').modal('show');
+
         	$.ajax({
         		url: "dichvu/edit-get.php?id=" + id,
         		type: 'get',
@@ -317,19 +322,14 @@
         		}
         	}
         });
-        $('#form-validate-edit').validate({
-            rules: {
-                DonGiaED: {
-                    number: true,
-                }
-            }
-        })
+        
         $(".btn-add-lieutrinh").click(function(){
-        	$('#listLieuTrinh').append("<div class='form-group lieu-trinh-row'><div class='col-md-7'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-3'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'><i class='raty-cancel cancel-off-png' data-alt='x'></i></a></div></div>");
+        	$('#listLieuTrinh').append("<div class='form-group lieu-trinh-row'><div class='col-md-7'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' required='required' class='form-control required' aria-required='true'></div><div class='col-md-3'><input type='text' name='LieuTrinh[SoBuoi][]' required='required' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'><i class='raty-cancel cancel-off-png' data-alt='x'></i></a></div></div>");
         });
 
         $(document.body).on('click', '.btn-add-edit-lieutrinh', function() {
-        	$('#edit-listLieuTrinh').append("<div class='form-group lieu-trinh-row'><div class='col-md-7'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-3'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
+        	$('#edit-listLieuTrinh').append("<div class='form-group lieu-trinh-row'><div class='col-md-7'><input type='text' name='LieuTrinh[DonGia][]' required='required' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-3'><input type='text' required='required' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
+
 		    
 		});
         $(document.body).on('click', '.btn-delete-lieutrinh', function() {
@@ -348,16 +348,18 @@
 				$('#tab-LieuTrinh').addClass('hide');
 			}
 		});
-		$('#edit-dichvu input[name="hinhthuc"]').change(function(){
-			var value = parseInt($(this).val());
+		$(document.body).on('click', '#edit-dichvu input[name="hinhthuc"]', function() {
+        	var value = parseInt($(this).val());
 			if(value == 1){
 				$('#edit-tab-BuoiLe').addClass('hide');
-				$('#tab-LieuTrinh').removeClass('hide');
+				$('#edit-tab-LieuTrinh').removeClass('hide');
 			}else{
 				$('#edit-tab-BuoiLe').removeClass('hide');
 				$('#edit-tab-LieuTrinh').addClass('hide');
 			}
+		    
 		});
+
 
 </script>		
 					<!-- PAGE CONTENT ENDS -->
