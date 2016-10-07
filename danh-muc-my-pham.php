@@ -31,14 +31,17 @@
             <tr>
                 <th class="center">
                     <label class="pos-rel">
-                        <input type="checkbox" id='select-all' class="ace">
+                        <input type="checkbox" id='select-all'>
                         <span class="lbl"></span>
                     </label>
                 </th>
                 <th class="center">Mã mỹ phẩm</th>
                 <th class="center">Tên mỹ phẩm</th>
-                <th class="center">Tên cơ sở</th>
                 <th class="center">Số lượng còn</th>
+                <th class="center">Người nhập</th>
+                <th class="center">Ngày nhập</th>
+                <th class="center">Ngày cập nhập</th>
+                <th class="center">Tên cơ sở</th>
                 <th>
                 </th>
             </tr>
@@ -60,17 +63,20 @@
                             </th>
                             <td class="text-center"><?php echo $row['MaMP']; ?></td>
                             <td class="text-center"><?php echo $row['TenMP']; ?></td>
+                            <td class="text-center"><?php echo $row['Soluong']; ?></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><?php echo $row['created_at']; ?></td>
+                            <td class="text-center"><?php echo $row['updated_at']; ?></td>
                             <td class="text-center">
                                 <?php 
                                 $coso = $row['CoSo_id'];
                                 if($coso == "0" ){
-                                    echo "Cơ sở Huế";
+                                    echo "CS Huế";
                                 }else{
-                                    echo "Cơ sở Sài Gòn";
+                                    echo "CS Sài Gòn";
                                 }
                                 ?>
                             </td>
-                            <td class="text-center"><?php echo $row['Soluong']; ?></td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <a href="#edit-mypham" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaMP'] ?>" class="btn btn-xs btn-info btn-edit">

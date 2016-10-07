@@ -31,7 +31,7 @@
 			<tr>
 				<th class="center">
 					<label class="pos-rel">
-						<input type="checkbox" id='select-all' class="ace">
+						<input type="checkbox" id='select-all'>
 						<span class="lbl"></span>
 					</label>
 				</th>

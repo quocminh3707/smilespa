@@ -31,15 +31,15 @@
 			<tr>
 				<th class="center">
 					<label class="pos-rel">
-						<input type="checkbox" id='select-all' class="ace">
+						<input type="checkbox" id='select-all'>
 						<span class="lbl"></span>
 					</label>
 				</th>
 				<th class="center">Mã dịch vụ</th>
 				<th class="center">Tên dịch vụ</th>
 				<th class="center">Tình trạng</th>
-				<th class="center">Tên cơ sở</th>
 				<th class="center">Đơn giá hiện tại</th>
+				<th class="center">Tên cơ sở</th>
 				<th>
 				</th>
 			</tr>
@@ -72,6 +72,8 @@
 								}
 								?>
 							</td>
+							
+							<td class="text-center"><?php echo $row['DonGia']; ?></td>
 							<td class="text-center">
 								<?php 
 								$coso = $row['MaCoSo'];
@@ -82,7 +84,6 @@
 								}
 								?>
 							</td>
-							<td class="text-center"><?php echo $row['DonGia']; ?></td>
 							<td class="text-center">
 								<div class="btn-group">
 									<a href="#edit-dichvu" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaDichVu'] ?>" class="btn btn-xs btn-info btn-edit">
@@ -95,6 +96,7 @@
 									</a>
 								</div>
 							</td>
+
 							</tr>
 							<?php
 				 }
@@ -149,32 +151,46 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right">Hinh thuc</label>
+							<label class="col-sm-3 control-label no-padding-right">Hình thức</label>
 							<div class="col-sm-9">
-								<input type="radio" name="hinhthuc" value='0' checked=""> Buoi le
-								<input type="radio" name="hinhthuc" value='1'> Lieu trinh
+								<label class="line-height-1 blue">
+									<input class="ace" type="radio" name="hinhthuc" value='0' checked="">
+									<span class="lbl"> Buổi lẻ</span>
+								</label>
+								<label class="line-height-1 blue">
+									<input class="ace" type="radio" name="hinhthuc" value='1'> 
+									<span class="lbl"> Liệu trình</span>
+								</label>
+								 
+								
 							</div>
 						</div>
 						<div class="form-group" id='tab-BuoiLe'>
-							<label class="col-sm-3 control-label no-padding-right">Don gia</label>
+							<label class="col-sm-3 control-label no-padding-right">Đơn giá</label>
 							<div class="col-sm-9">
 								<input type="text" name="BuoiLe[DonGia]" value="" class="form-control required" aria-required="true">
 							</div>
 						</div>
 						<div class="form-group hide" id='tab-LieuTrinh'>
-							<label class="col-sm-3 control-label no-padding-right">
-								<button type='button' class='btn-add-lieutrinh btn btn-primary'>+</button>
+							<label class="col-sm-3 no-padding-right">
+								<a  class='btn-add-lieutrinh btn btn-xs btn-success btn-create' style="float:right">
+									<i class="ace-icon fa fa-plus bigger-120"></i>
+								</a></label>
+							
+								
 							</label>
 							<div class="col-sm-9" id='listLieuTrinh'>
-								<div class='row lieu-trinh-row'>
-									<div class='col-md-6'>
+								<div class='form-group lieu-trinh-row'>
+									<div class='col-md-7'>
 										<input type="text" name="LieuTrinh[DonGia][]" value="" placeholder="Đơn giá" class="form-control required" aria-required="true">
 									</div>		
-									<div class='col-md-4'>
-										<input type="text" name="LieuTrinh[SoBuoi][]" value="" placeholder="So buoi" class="form-control required" aria-required="true">
+									<div class='col-md-3'>
+										<input type="text" name="LieuTrinh[SoBuoi][]" value="" placeholder="Số buổi" class="form-control required" aria-required="true">
 									</div>
 									<div class='col-md-2'>
-										<a href='#delete' class='btn-delete-lieutrinh'>x</a>
+										<a href='#delete' class='btn-delete-lieutrinh'>
+											<i class="raty-cancel cancel-off-png" data-alt="x"></i>
+										</a>
 									</div>
 								</div>
 								
@@ -309,11 +325,11 @@
             }
         })
         $(".btn-add-lieutrinh").click(function(){
-        	$('#listLieuTrinh').append("<div class='row lieu-trinh-row'><div class='col-md-6'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-4'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
+        	$('#listLieuTrinh').append("<div class='form-group lieu-trinh-row'><div class='col-md-7'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-3'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'><i class='raty-cancel cancel-off-png' data-alt='x'></i></a></div></div>");
         });
 
         $(document.body).on('click', '.btn-add-edit-lieutrinh', function() {
-        	$('#edit-listLieuTrinh').append("<div class='row lieu-trinh-row'><div class='col-md-6'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-4'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
+        	$('#edit-listLieuTrinh').append("<div class='form-group lieu-trinh-row'><div class='col-md-7'><input type='text' name='LieuTrinh[DonGia][]' value='' placeholder='Đơn giá' class='form-control required' aria-required='true'></div><div class='col-md-3'><input type='text' name='LieuTrinh[SoBuoi][]' value='' placeholder='So buoi' class='form-control required' aria-required='true'></div><div class='col-md-2'><a href='#delete' class='btn-delete-lieutrinh'>x</a></div></div>");
 		    
 		});
         $(document.body).on('click', '.btn-delete-lieutrinh', function() {

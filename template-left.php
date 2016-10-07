@@ -97,7 +97,6 @@
 								Trang chủ
 							</li>
 						</ul><!-- /.breadcrumb -->
-
 						<div class="nav-search" id="nav-search">
 							<form class="form-search">
 								<span class="input-icon">

@@ -50,16 +50,19 @@
 		<script src="assets/js/buttons.print.min.js"></script>
 		<script src="assets/js/buttons.colVis.min.js"></script>
 		<script src="assets/js/dataTables.select.min.js"></script>
-		<script>
+		<script type="text/javascript">
 		$(document).ready(function () {
-$('.show-details-btn').on('click', function(e) {
-					e.preventDefault();
-					$(this).closest('tr').next().toggleClass('open');
-					$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
-				});
-    });
+			$('.show-details-btn').on('click', function(e) {
+						e.preventDefault();
+						$(this).closest('tr').next().toggleClass('open');
+						$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+					});
+			    });
 			
-
+			$("#cauHinhTacNghiep").on("hide.bs.dropdown", function (e) {
+	            e.preventDefault();
+	            return false;
+	        });
 		</script>
 		<!--[if lte IE 8]>
 		<script src="assets/js/html5shiv.min.js"></script>
@@ -92,38 +95,31 @@ $('.show-details-btn').on('click', function(e) {
 
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
-						<li class="light-blue dropdown-modal">
-							<a data-toggle="dropdown" href="#" class="">
-								
-								<span class="user-info">
-									<small>Co sở,</small>
-									Huế
-								</span>
-
-								<i class="ace-icon fa fa-caret-down"></i>
-							</a>
-
-							<ul class="dropdown-menu" style="width: 320px; height: 103px; left: 514px; right: auto; top: 117px;">
-								<li>
-									<div style="width:300px;">
-										<form method="post" action="http://goldenlotushotel.vn/spa/CauHinh" class="form-inline">
-											<label for="nam" class="control-label inline" style="color: black; font-weight: bold; padding-left: 10px;">Chọn cơ sở: </label>
-											<select name="CauHinhCoSo" id="CauHinhCoSo" class="form-control required">
-												<option value="CS1">Cơ sở Huế</option>
-												<option value="CS2" selected="selected">Cơ sở Sài Gòn</option>
-
-											</select>
-											<button type="submit" class="btn btn-xs btn-primary">
-												<i class="ace-icon fa fa-check bigger-120"></i>
-											</button>
-											<button class="btn btn-xs btn-danger" type="button" onclick="$('#cauHinhTacNghiep').removeClass('open');">
-												<i class="ace-icon fa fa-ban bigger-120"></i>
-											</button>
-										</form>
-									</div>
-								</li>
-							</ul>
-						</li>
+						<li id="cauHinhTacNghiep" class="light-blue dropdown-modal">
+					        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
+					            Cơ sở Sài Gòn
+					                            <i class="ace-icon fa fa-caret-down"></i>
+					                    </a>
+					                    <ul class="dropdown-menu dropdown-menu-right">
+					                <li>
+					                    <div style="text-align: center; padding: 0 10px; white-space: nowrap;">
+					                        <form method="post" action="http://goldenlotushotel.vn/spa/CauHinh" class="form-inline">
+					                            <label for="nam" class="control-label inline" style="color: black; font-weight: bold; padding-left: 10px;">Chọn cơ sở: </label><br>
+					                            <select name="CauHinhCoSo" id="CauHinhCoSo" class="form-control required">
+					                                <option value="CS1">Cơ sở Huế</option>
+													<option value="CS2" selected="selected">Cơ sở Sài Gòn</option>
+					                            </select>
+					                            <button type="submit" class="btn btn-xs btn-primary">
+					                                <i class="ace-icon fa fa-check bigger-120"></i>
+					                            </button>
+					                            <button class="btn btn-xs btn-danger" type="button" onclick="$('#cauHinhTacNghiep').removeClass('open');">
+					                                <i class="ace-icon fa fa-ban bigger-120"></i>
+					                            </button>
+					                        </form>
+					                    </div>
+					                </li>
+					            </ul>
+			            </li>
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
@@ -152,7 +148,7 @@ $('.show-details-btn').on('click', function(e) {
 							</ul>
 						</li>
 						<li>
-							<a href="" title="�ang xu?t">
+							<a href="" title="Ðang xu?t">
 								<i class="ace-icon fa fa-power-off red2"></i>
 							</a>
 						</li>
