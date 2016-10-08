@@ -35,3 +35,19 @@ foreach (glob($_SERVER['DOCUMENT_ROOT'] . '/'.SOURCE_FOLDER.'models/*.php') as $
 {
     require_once $filename;
 }
+
+
+Class Auth{
+	static function get(){
+		if(isset($_SESSION['auth'])){
+			return Model_User::find($_SESSION['auth']);
+		}else{
+			return false;
+		}
+	}
+}
+
+function redirect($url){
+	header('location: '. $url);
+	exit();
+};

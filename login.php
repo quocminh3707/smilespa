@@ -1,3 +1,12 @@
+<?php 
+
+require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
+
+if(Auth::get()){
+	redirect("/".SOURCE_FOLDER);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -63,18 +72,18 @@
 
 											<div class="space-6"></div>
 
-											<form>
+											<form id='form-login'>
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
+															<input name='username' type="text" class="form-control" placeholder="Username" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
+															<input name='password' type="password" class="form-control" placeholder="Password" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
@@ -83,11 +92,11 @@
 
 													<div class="clearfix">
 														<label class="inline">
-															<input type="checkbox" class="ace" />
+															<input type="checkbox" name='remember'  class="ace" />
 															<span class="lbl"> Remember Me</span>
 														</label>
 
-														<button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+														<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
 															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110">Login</span>
 														</button>
@@ -257,6 +266,24 @@
 			 });
 			});
 			
+		</script>
+		<script type="text/javascript" src="http://malsup.github.io/jquery.form.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var options = {
+					url: "user/login.php",
+					type: 'post',
+					success: function(result){
+						var json = JSON.parse(result);
+						if(json.success){
+							location.reload();
+						}else{
+							alert(json.message);
+						}
+					}
+				};
+				$('#form-login').ajaxForm(options);
+			});
 		</script>
 	</body>
 </html>

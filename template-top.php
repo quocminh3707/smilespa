@@ -125,7 +125,7 @@
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Xin chào,</small>
-									Quốc Minh
+									<?php print_r(Auth::get()->username); ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -148,7 +148,7 @@
 							</ul>
 						</li>
 						<li>
-							<a href="" title="Ðang xu?t">
+							<a href="<?php echo "/".SOURCE_FOLDER. "user/logout.php"; ?>" title="�ang xu?t">
 								<i class="ace-icon fa fa-power-off red2"></i>
 							</a>
 						</li>

@@ -3,7 +3,6 @@
 require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 
 
-
 if (isset($_POST['submit'])) {
 
 	if($_POST['hinhthuc'] == 0){
