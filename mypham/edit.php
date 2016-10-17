@@ -8,7 +8,7 @@ if(isset($_POST['id']))
 	$mypham = Model_MyPham::find($_POST['id']);
 	$mypham->MaMP = $_POST['MaMP'];
 	$mypham->TenMP = $_POST['TenMP'];
-	$mypham->CoSo_id = $_POST['CoSo_id'];
+	$mypham->MaCoSo = $_POST['MaCoSo'];
 	$mypham->Soluong = $_POST['SoluongED'];
 	$mypham->save();
 

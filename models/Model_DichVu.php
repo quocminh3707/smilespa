@@ -9,7 +9,6 @@ class Model_DichVu extends Model
 
     public function lieutrinhs()
     {
-        return $this->hasMany('Model_LieuTrinh', 
-        	'dichvu_id');
+        return $this->hasMany('Model_LieuTrinh', 'dichvu_id');
     }
 }

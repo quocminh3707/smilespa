@@ -236,41 +236,49 @@ class Str
     }
 
     /**
+     * Generate a more truly "random" bytes.
+     *
+     * @param  int  $length
+     * @return string
+     *
+     * @deprecated since version 5.2. Use random_bytes instead.
+     */
+    public static function randomBytes($length = 16)
+    {
+        return random_bytes($length);
+    }
+
+    /**
      * Generate a "random" alpha-numeric string.
      *
      * Should not be considered sufficient for cryptography, etc.
-     *
-     * @deprecated since version 5.3. Use the "random" method directly.
      *
      * @param  int  $length
      * @return string
      */
     public static function quickRandom($length = 16)
     {
-        if (PHP_MAJOR_VERSION > 5) {
-            return static::random($length);
-        }
-
         $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         return static::substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
     }
 
     /**
-     * Replace a given value in the string sequentially with an array.
+     * Compares two strings using a constant-time algorithm.
      *
-     * @param  string  $search
-     * @param  array   $replace
-     * @param  string  $subject
-     * @return string
+     * Note: This method will leak length information.
+     *
+     * Note: Adapted from Symfony\Component\Security\Core\Util\StringUtils.
+     *
+     * @param  string  $knownString
+     * @param  string  $userInput
+     * @return bool
+     *
+     * @deprecated since version 5.2. Use hash_equals instead.
      */
-    public static function replaceArray($search, array $replace, $subject)
+    public static function equals($knownString, $userInput)
     {
-        foreach ($replace as $value) {
-            $subject = static::replaceFirst($search, $value, $subject);
-        }
-
-        return $subject;
+        return hash_equals($knownString, $userInput);
     }
 
     /**

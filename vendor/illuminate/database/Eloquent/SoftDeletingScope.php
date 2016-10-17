@@ -9,7 +9,7 @@ class SoftDeletingScope implements Scope
      *
      * @var array
      */
-    protected $extensions = ['ForceDelete', 'Restore', 'WithTrashed', 'WithoutTrashed', 'OnlyTrashed'];
+    protected $extensions = ['ForceDelete', 'Restore', 'WithTrashed', 'OnlyTrashed'];
 
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -21,6 +21,8 @@ class SoftDeletingScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         $builder->whereNull($model->getQualifiedDeletedAtColumn());
+
+        $this->extend($builder);
     }
 
     /**
@@ -97,25 +99,6 @@ class SoftDeletingScope implements Scope
     {
         $builder->macro('withTrashed', function (Builder $builder) {
             return $builder->withoutGlobalScope($this);
-        });
-    }
-
-    /**
-     * Add the without-trashed extension to the builder.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @return void
-     */
-    protected function addWithoutTrashed(Builder $builder)
-    {
-        $builder->macro('withoutTrashed', function (Builder $builder) {
-            $model = $builder->getModel();
-
-            $builder->withoutGlobalScope($this)->whereNull(
-                $model->getQualifiedDeletedAtColumn()
-            );
-
-            return $builder;
         });
     }
 

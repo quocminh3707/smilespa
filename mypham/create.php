@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
 	$mypham = new Model_MyPham();
 	$mypham->MaMP = $_POST['MaMP'];
 	$mypham->TenMP = $_POST['TenMP'];
-	$mypham->CoSo_id = $_POST['CoSo_id'];
+	$mypham->MaCoSo = $_POST['MaCoSo'];
 	$mypham->Soluong = $_POST['Soluong'];
 	$mypham->save();
 

@@ -1,16 +1,27 @@
 <?php
 	session_start();
+	define('ITEMS_PER_PAGE', 50);
 	define('SOURCE_FOLDER', 'spa/');
 	define('DIRECT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/'. SOURCE_FOLDER);
 	require $_SERVER['DOCUMENT_ROOT'] . '/'.SOURCE_FOLDER.'vendor/autoload.php';
 	use Illuminate\Database\Capsule\Manager as Capsule;
-
+	if(isset($_GET['page'])){
+		$currentPage = $_GET['page'];
+		Illuminate\Pagination\Paginator::currentPageResolver(function () use ($currentPage) {
+        	return $currentPage;
+    	});
+	}else{
+		Illuminate\Pagination\Paginator::currentPageResolver(function () {
+        	return 1;
+    	});
+	}
+	
 	$capsule = new Capsule;
 
 	$capsule->addConnection([
 	    'driver'    => 'mysql',
 	    'host'      => 'localhost',
-	    'database'  => 'smilespa',
+	    'database'  => 'spa',
 	    'username'  => 'root',
 	    'password'  => '',
 	    'charset'   => 'utf8',

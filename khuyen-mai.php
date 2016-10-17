@@ -36,8 +36,9 @@
 					</label>
 				</th>
 				<th class="center">Mã khuyến mãi</th>
+                <th class="center">Tên khuyến mãi</th>
+				<th class="center">Thành tiền</th>
 				<th class="center">Loại khuyến mãi</th>
-				<th class="center">Tên khuyến mãi</th>
 				<th class="center">Cơ sở</th>
 				<th>
 				</th>
@@ -59,6 +60,7 @@
 								</label>
 							</th>
 							<td class="text-center"><?php echo $row['MaKM']; ?></td>
+                            <td class="text-center"><?php echo $row['TenKM']; ?></td>
 							<td class="text-center">
 								<?php  
 									$sotien = $row['SoTien'];
@@ -74,8 +76,8 @@
 							</td>
 							<td class="text-center">
 								<?php 
-								$TenKM = $row['TenKM'];
-								if($TenKM == "1" ){
+								$LoaiKM = $row['LoaiKM'];
+								if($LoaiKM == "1" ){
 									echo "Khuyến mãi tiền mặt";
 								}else{
 									echo "Khuyến mãi phần trăm";
@@ -83,14 +85,14 @@
 								?>
 							</td>
 							<td class="text-center">
-								<?php 
-								$coso = $row['CoSo_id'];
-								if($coso == "0" ){
-									echo "Cơ sở Huế";
-								}else{
-									echo "Cơ sở Sài Gòn";
-								}
-								?>
+								 <?php 
+                                $macoso = $row['MaCoSo'];
+                                if($macoso == "CS1" ){
+                                    echo "CS Huế";
+                                }else{
+                                    echo "CS Sài Gòn";
+                                }
+                                ?>
 							</td>
 							<td class="text-center">
 								<div class="btn-group">
@@ -132,10 +134,16 @@
                             <input type="text" name="MaKM" id="MaKM" value="" placeholder="Mã khuyến mãi" class="form-control required" aria-required="true">
                         </div>
                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right">Tên khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="TenKM" id="TenKM" value="" placeholder="Tên khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label no-padding-right">Loại khuyến mãi</label>
                         <div class="col-sm-8">
-                            <select name="TenKM" id="TenKM" class="form-control required" onchange="khuyenmai(this.value);" aria-required="true">
+                            <select name="LoaiKM" id="LoaiKM" class="form-control required" onchange="khuyenmai(this.value);" aria-required="true">
                                 <option value="1" selected>Khuyến mãi tiền mặt</option>
 								<option value="2">Khuyến mãi phần trăm</option>
 
@@ -158,7 +166,7 @@
                     <div class="form-group" style="display: none;">
                         <label class="col-sm-4 control-label no-padding-right">Mã cơ sở</label>
                         <div class="col-sm-8">
-                            <select name="CoSo_id" id="CoSo_id" class="form-control required" aria-required="true">
+                            <select name="MaCoSo" id="MaCoSo" class="form-control required" aria-required="true">
                                 <option value="CS1">Cơ sở Huế</option>
 								<option value="CS2">Cơ sở Sài Gòn</option>
 
@@ -205,13 +213,19 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label no-padding-right">Mã khuyến mãi</label>
                         <div class="col-sm-8">
-                            <input type="text" name="MaKM" id="MaKM2" value="" placeholder="Mã khuyến mãi" class="form-control required" aria-required="true">
+                            <input type="text" name="MaKM2" id="MaKM2" value="" placeholder="Mã khuyến mãi" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right">Tên khuyến mãi</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="TenKM2" id="TenKM2" value="" placeholder="Tên khuyến mãi" class="form-control required" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label no-padding-right">Loại khuyến mãi</label>
                         <div class="col-sm-8">
-                            <select name="TenKM" id="TenKM2" class="form-control required" onchange="khuyenmaiED(this.value);" aria-required="true">
+                            <select name="LoaiKM2" id="LoaiKM2" class="form-control required" onchange="khuyenmaiED(this.value);" aria-required="true">
                                 <option value="1">Khuyến mãi tiền mặt</option>
 								<option value="2">Khuyến mãi phần trăm</option>
 
@@ -221,20 +235,20 @@
                     <div class="form-group" id="khuyenmai-tienED">
                         <label class="col-sm-4 control-label no-padding-right">Tiền khuyến mãi</label>
                         <div class="col-sm-8">
-                            <input type="text" name="SoTien" id="SoTien2" value="" placeholder="Tiền khuyến mãi" class="form-control required" aria-required="true">
+                            <input type="text" name="SoTien2" id="SoTien2" value="" placeholder="Tiền khuyến mãi" class="form-control required" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group" id="khuyenmai-phantramED" style="display: none;">
                         <label class="col-sm-4 control-label no-padding-right">Phần trăm khuyến mãi</label>
                         <div class="col-sm-8">
-                            <input type="text" name="PhanTram" id="PhanTram2" value="" placeholder="Phần trăm khuyến mãi" class="form-control required" aria-required="true">
+                            <input type="text" name="PhanTram2" id="PhanTram2" value="" placeholder="Phần trăm khuyến mãi" class="form-control required" aria-required="true">
                         </div>
                     </div>
 
                     <div class="form-group" style="display: none;">
                         <label class="col-sm-4 control-label no-padding-right">Mã cơ sở</label>
                         <div class="col-sm-8">
-                            <select name="CoSo_id" id="CoSo_id2" class="form-control required" aria-required="true">
+                            <select name="MaCoSo" id="MaCoSo2" class="form-control required" aria-required="true">
                                 <option value="CS1">Cơ sở Huế</option>
 								<option value="CS2">Cơ sở Sài Gòn</option>
 
@@ -269,9 +283,10 @@
             	$('#IDHidden2').val(obj.id);
                 $('#MaKM2').val(obj.MaKM);
                 $('#TenKM2').val(obj.TenKM);
+                $('#TenKM2').val(obj.TenKM);
                 $('#SoTien2').val(obj.SoTien);
                 $('#PhanTram2').val(obj.PhanTram);
-                $('#CoSo_id2').val(obj.CoSo_id);
+                $('#MaCoSo2').val(obj.MaCoSo);
             }
         }
     });
@@ -312,16 +327,30 @@
     });
     $('#form-validate-create').validate({
     	rules: {
-    		MaKM:{
+            MaKM:{
+                require: true,
+            },
+    		TenKM:{
     			require: true,
     		},
-    		SoTien:{
-    			number: true,
-    		},
-    		PhanTram:{
-    			number: true,
-    		}
+            SoTien:{
+                require: true,
+                number: true,
+            },
     	}
+    });
+    $('#form-validate-edit').validate({
+        rules: {
+            MaKM2:{
+                require: true,
+            },
+            SoTien2:{
+                number: true,
+            },
+            PhanTram2:{
+                number: true,
+            }
+        }
     });
     function khuyenmai(loaikhuyenmai) {
 	    if (loaikhuyenmai == 1) {

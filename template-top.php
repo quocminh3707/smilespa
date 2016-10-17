@@ -97,7 +97,7 @@
 					<ul class="nav ace-nav">
 						<li id="cauHinhTacNghiep" class="light-blue dropdown-modal">
 					        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
-					            Cơ sở Sài Gòn
+					            Cơ sở Huế
 					                            <i class="ace-icon fa fa-caret-down"></i>
 					                    </a>
 					                    <ul id="CauHinh" class="dropdown-menu dropdown-menu-right">
@@ -106,8 +106,8 @@
 							                        <form method="post" action="" class="form-inline">
 							                            <label for="nam" class="control-label inline" style="color: black; font-weight: bold; padding-left: 10px;">Chọn cơ sở: </label><br>
 							                            <select name="CauHinhCoSo" id="CauHinhCoSo" class="form-control required">
-							                                <option value="CS1">Cơ sở Huế</option>
-															<option value="CS2" selected="selected">Cơ sở Sài Gòn</option>
+							                                <option value="CS1" selected="selected">Cơ sở Huế</option>
+															<option value="CS2">Cơ sở Sài Gòn</option>
 							                            </select>
 							                            <button type="submit" class="btn btn-xs btn-primary">
 							                                <i class="ace-icon fa fa-check bigger-120"></i>
@@ -132,7 +132,7 @@
 							</a>
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-								<li>
+								<!-- <li>
 									<a href="#">
 										<i class="ace-icon fa fa-cog"></i>
 										Settings
@@ -144,11 +144,11 @@
 										<i class="ace-icon fa fa-user"></i>
 										Profile
 									</a>
-								</li>
+								</li> -->
 							</ul>
 						</li>
 						<li>
-							<a href="<?php echo "/".SOURCE_FOLDER. "user/logout.php"; ?>" title="�ang xu?t">
+							<a href="<?php echo "/".SOURCE_FOLDER. "user/logout.php"; ?>" title="Ðăng xuất">
 								<i class="ace-icon fa fa-power-off red2"></i>
 							</a>
 						</li>

@@ -13,14 +13,14 @@
         </small>
     </h1>
 </div>
-<form id='form-delete-selected' action='mypham/delete-selected.php' method='post'>
+<form id='form-delete-selected' action='thanhvien/delete-selected.php' method='post'>
     
     <div class="pull-right mr-bottom" >
-        <a href="#create-mypham" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
+        <a href="#create-user" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
                 <i class="ace-icon fa fa-plus bigger-120"></i>
                 Thêm
         </a>
-        <a href="#del-mypham" role="button" class="btn btn-xs btn-danger btn-delete-selected">
+        <a href="#del-user" role="button" class="btn btn-xs btn-danger btn-delete-selected">
                 <i class="ace-icon fa fa-trash-o bigger-120"></i>
                 Xóa
         </a>
@@ -41,7 +41,7 @@
                 <th class="center">Địa chỉ</th>
                 <th class="center">Tình trạng</th>
                 <th class="center">Nhóm</th>
-                <th class="center">Cơ sở</th>
+                <th class="center"></th>
                 <th>
                 </th>
             </tr>
@@ -49,9 +49,9 @@
         <tbody>
                 
                 
-                <!-- <?php
-                $all_mypham = Model_MyPham::all()->toArray();
-                 foreach($all_mypham as $row)
+                <?php
+                $all_user = Model_User::all()->toArray();
+                 foreach($all_user as $row)
                  {
                    ?>   
                             <tr>
@@ -61,29 +61,41 @@
                                     <span class="lbl"></span>
                                 </label>
                             </th>
-                            <td class="text-center"><?php echo $row['MaMP']; ?></td>
-                            <td class="text-center"><?php echo $row['TenMP']; ?></td>
-                            <td class="text-center"><?php echo $row['Soluong']; ?></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><?php echo $row['created_at']; ?></td>
-                            <td class="text-center"><?php echo $row['updated_at']; ?></td>
+                            <td class="text-center"><?php echo $row['Ho'];echo "&nbsp"; echo $row['Ten']; ?></td>
+                            <td class="text-center"><?php echo $row['Sdt']; ?></td>
+                            <td class="text-center"><?php echo $row['Email']; ?></td>
+                            <td class="text-center"><?php echo $row['Dia_Chi']; ?></td>
                             <td class="text-center">
                                 <?php 
-                                $coso = $row['CoSo_id'];
-                                if($coso == "0" ){
-                                    echo "CS Huế";
-                                }else{
-                                    echo "CS Sài Gòn";
-                                }
-                                ?>
+                                    $tinhtrang = $row['Tinh_Trang'];
+                                    if($tinhtrang == 0){
+                                        echo "Đã kích hoạt";
+                                    }else if($tinhtrang == 1){
+                                        echo "Chưa kich hoạt";
+                                    }else if($tinhtrang == 2){
+                                        echo "Khóa tài khoản";
+                                    }
+                                 ?>    
+                            </td>
+                             <td class="text-center">
+                                <?php 
+                                    $nhom = $row['level'];
+                                    if($nhom == 0){
+                                        echo "Nhóm quản trị";
+                                    }else if($nhom == 1){
+                                        echo "Nhóm Biên tập";
+                                    }else if($nhom == 2){
+                                        echo "Nhóm thành viên";
+                                    }
+                                 ?>    
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="#edit-mypham" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaMP'] ?>" class="btn btn-xs btn-info btn-edit">
+                                    <a href="#edit-user" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['Ho'];echo "&nbsp";echo $row['Ten'] ?>" class="btn btn-xs btn-info btn-edit">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                             Sữa
                                     </a>
-                                    <a href="#del-mypham" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaMP'] ?>" class="btn btn-xs btn-danger btn-delete">
+                                    <a href="#del-user" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['Ho'];echo "&nbsp";echo $row['Ten'] ?>" class="btn btn-xs btn-danger btn-delete">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                             Xóa
                                     </a>
@@ -92,7 +104,7 @@
                             </tr>
                             <?php
                  }
-                 ?> -->
+                 ?>
                 
             
         
@@ -101,68 +113,67 @@
 
 
 </form>
-<div id="create-mypham" class="modal fade" tabindex="-1">
+<div id="create-user" class="modal fade" tabindex="-1">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="modalTitle">Thêm mới</h4>
             </div>
-            <form id="form-validate" method="post" action="http://goldenlotushotel.vn/spa/ThanhVien" class="form-horizontal" novalidate="novalidate">
+            <form id="form-validate" method="post" action="thanhvien/create.php" class="form-horizontal" novalidate="novalidate">
                 <div class="modal-body">
                     <input type="hidden" name="IDHidden" id="IDHidden" value="">
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Họ và tên</label>
                         <div class="col-sm-5">
-                            <input type="text" name="Ho" id="Ho" value="" placeholder="Họ" class="form-control">
+                            <input type="text" name="Ho" placeholder="Họ" class="form-control">
                         </div>
                         <div class="col-sm-4">
-                            <input type="text" name="Ten" id="Ten" value="" placeholder="Tên" class="form-control required" aria-required="true">
+                            <input type="text" name="Ten" placeholder="Tên" class="form-control required" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group" id="dangnhap-group">
                         <label class="col-sm-3 control-label no-padding-right">Tên đăng nhập</label>
                         <div class="col-sm-4">
-                            <input type="text" name="TenDangNhap" id="TenDangNhap" value="" placeholder="Tên đăng nhập" class="form-control required" aria-required="true">
+                            <input type="text" name="username" placeholder="Tên đăng nhập" class="form-control required" aria-required="true">
                         </div>
                         <label class="col-sm-2 control-label no-padding-right">Mật khẩu</label>
                         <div class="col-sm-3">
-                            <input type="password" name="MatKhau" id="MatKhau" value="" placeholder="Mật khẩu" class="form-control required" aria-required="true">
+                            <input type="password" name="password" placeholder="Mật khẩu" class="form-control required" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Số điện thoại</label>
                         <div class="col-sm-9">
-                            <input type="text" name="SoDienThoai" id="SoDienThoai" value="" placeholder="Số điện thoại" class="form-control">
+                            <input type="text" name="Sdt" placeholder="Số điện thoại" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Email</label>
                         <div class="col-sm-9">
-                            <input type="text" name="Email" id="Email" value="" placeholder="Email" class="form-control">
+                            <input type="text" name="Email" placeholder="Email" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Địa chỉ</label>
                         <div class="col-sm-9">
-                            <input type="text" name="DiaChi" id="DiaChi" value="" placeholder="Địa chỉ" class="form-control">
+                            <input type="text" name="Dia_Chi" placeholder="Địa chỉ" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Tình trạng</label>
                         <div class="col-sm-9">
-                            <select name="TinhTrang" id="TinhTrang" class="form-control required" aria-required="true">
-                                <option value="-1">Khóa tài khoản</option>
-								<option value="0">Chưa kích hoạt</option>
-								<option value="1">Đã kích hoạt</option>
-
+                            <select name="Tinh_Trang" class="form-control required" aria-required="true">
+                                <option value="0">Đã kích hoạt</option>
+                                <option value="1">Chưa kích hoạt</option>
+                                <option value="2">Khóa tài khoản</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group" style="display: none;">
                         <label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
                         <div class="col-sm-9">
-                            <select name="MaCoSo" id="MaCoSo" class="form-control required" aria-required="true">
+                            <select name="MaCoSo" class="form-control required" aria-required="true">
                                 <option value="CS1">Cơ sở Huế</option>
 								<option value="CS2">Cơ sở Sài Gòn</option>
 
@@ -172,11 +183,10 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Mã nhóm</label>
                         <div class="col-sm-9">
-                            <select name="MaNhom" id="MaNhom" class="form-control required" aria-required="true">
-                                <option value="1">Nhóm quản trị</option>
-                                <option value="2">Biên tập viên</option>
-								<option value="3">Nhóm thành viên</option>
-
+                            <select name="level" class="form-control required" aria-required="true">
+                                <option value="0">Nhóm thành viên</option>
+                                <option value="1">Biên tập viên</option>
+                                <option value="2">Nhóm quản trị</option>
                             </select>
                         </div>
                     </div>
@@ -193,7 +203,7 @@
 
 
 
-<div id="del-mypham" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
+<div id="del-user" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -210,70 +220,69 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="edit-mypham" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
+<div id="edit-user" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="modalTitle">Thêm mới</h4>
             </div>
-            <form id="form-validate" method="post" action="http://goldenlotushotel.vn/spa/ThanhVien" class="form-horizontal" novalidate="novalidate">
+            <form id="form-validate" method="post" action="thanhvien/edit.php" class="form-horizontal" novalidate="novalidate">
                 <div class="modal-body">
-                    <input type="hidden" name="IDHidden" id="IDHidden" value="">
+                    <input type="hidden" name="id" id="IDHiddenED" value="">
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Họ và tên</label>
                         <div class="col-sm-5">
-                            <input type="text" name="Ho" id="Ho" value="" placeholder="Họ" class="form-control">
+                            <input type="text" name="HoED" id="HoED" placeholder="Họ" class="form-control">
                         </div>
                         <div class="col-sm-4">
-                            <input type="text" name="Ten" id="Ten" value="" placeholder="Tên" class="form-control required" aria-required="true">
+                            <input type="text" name="TenED" id="TenED" placeholder="Tên" class="form-control required" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group" id="dangnhap-group">
                         <label class="col-sm-3 control-label no-padding-right">Tên đăng nhập</label>
                         <div class="col-sm-4">
-                            <input type="text" name="TenDangNhap" id="TenDangNhap" value="" placeholder="Tên đăng nhập" class="form-control required" aria-required="true">
+                            <input type="text" name="usernameED" id="usernameED" placeholder="Tên đăng nhập" class="form-control required" aria-required="true">
                         </div>
                         <label class="col-sm-2 control-label no-padding-right">Mật khẩu</label>
                         <div class="col-sm-3">
-                            <input type="password" name="MatKhau" id="MatKhau" value="" placeholder="Mật khẩu" class="form-control required" aria-required="true">
+                            <input type="password" name="passwordED" id="passwordED"  placeholder="Mật khẩu" class="form-control required" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Số điện thoại</label>
                         <div class="col-sm-9">
-                            <input type="text" name="SoDienThoai" id="SoDienThoai" value="" placeholder="Số điện thoại" class="form-control">
+                            <input type="text" name="SdtED" id="SdtED" placeholder="Số điện thoại" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Email</label>
                         <div class="col-sm-9">
-                            <input type="text" name="Email" id="Email" value="" placeholder="Email" class="form-control">
+                            <input type="text" name="EmailED" id="EmailED" placeholder="Email" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Địa chỉ</label>
                         <div class="col-sm-9">
-                            <input type="text" name="DiaChi" id="DiaChi" value="" placeholder="Địa chỉ" class="form-control">
+                            <input type="text" name="Dia_ChiED" id="Dia_ChiED" placeholder="Địa chỉ" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Tình trạng</label>
                         <div class="col-sm-9">
-                            <select name="TinhTrang" id="TinhTrang" class="form-control required" aria-required="true">
-                                <option value="-1">Khóa tài khoản</option>
-								<option value="0">Chưa kích hoạt</option>
-								<option value="1">Đã kích hoạt</option>
-
+                            <select name="Tinh_TrangED" id="Tinh_TrangED"  class="form-control required" aria-required="true">
+                                <option value="0">Đã kích hoạt</option>
+                                <option value="1">Chưa kích hoạt</option>
+                                <option value="2">Khóa tài khoản</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group" style="display: none;">
                         <label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
                         <div class="col-sm-9">
-                            <select name="MaCoSo" id="MaCoSo" class="form-control required" aria-required="true">
+                            <select name="MaCoSoED" id="MaCoSoED" class="form-control required" aria-required="true">
                                 <option value="CS1">Cơ sở Huế</option>
-								<option value="CS2">Cơ sở Sài Gòn</option>
+                                <option value="CS2">Cơ sở Sài Gòn</option>
 
                             </select>
                         </div>
@@ -281,19 +290,18 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Mã nhóm</label>
                         <div class="col-sm-9">
-                            <select name="MaNhom" id="MaNhom" class="form-control required" aria-required="true">
-                                <option value="1">Nhóm quản trị</option>
-                                <option value="2">Biên tập viên</option>
-								<option value="3">Nhóm thành viên</option>
-
+                            <select name="levelED" id="levelED" class="form-control required" aria-required="true">
+                                <option value="0">Nhóm thành viên</option>
+                                <option value="1">Biên tập viên</option>
+                                <option value="2">Nhóm quản trị</option>
                             </select>
                         </div>
                     </div>
                 </div>
                <div class="modal-footer">
-					<button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal"><i class="ace-icon fa fa-times"></i>Đóng</button>
-					<button type="submit" name="submit" class="btn btn-sm btn-primary pull-right">Lưu</button>
-				</div>
+                    <button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal"><i class="ace-icon fa fa-times"></i>Đóng</button>
+                    <button type="submit" name="submit" class="btn btn-sm btn-primary pull-right">Lưu</button>
+                </div>
             </form>
         </div><!-- /.modal-content -->
     </div>
@@ -302,7 +310,7 @@
 <script>        
  function edit_ajax(id) {
         $.ajax({
-            url: 'mypham/get.php?id=' + id,
+            url: 'thanhvien/get.php?id=' + id,
             type: 'GET',
             dataType: 'html',
             error: function () {
@@ -314,25 +322,28 @@
                 if (obj == null) {
                     alert('Không lấy được dữ liệu! Xin vui lòng thử lại sau!');
                 } else {
-                    $('#IDHidden2').val(obj.id);
-                    $('#MaMP2').val(obj.MaMP);
-                    $('#TenMP2').val(obj.TenMP);
-                    $('#CoSo_id2').val(obj.CoSo_id);
-                    $('#Soluong2').val(obj.Soluong);
-                    
+                    $('#IDHiddenED').val(obj.id);
+                    $('#HoED').val(obj.Ho);
+                    $('#TenED').val(obj.Ten);
+                    $('#SdtED').val(obj.Sdt);
+                    $('#EmailED').val(obj.Email);
+                    $('#Dia_ChiED').val(obj.Dia_Chi);
+                    $('#Tinh_TrangED').val(obj.Tinh_Trang);
+                    $('#MaCoSoED').val(obj.MaCoSo);
+                    $('#levelED').val(obj.level);
                 }
             }
         });
     }
     function del(id, name) {
         $('#msg-delete').html('Bạn có chắc chắn muốn xóa khách hàng <b>' + name + '</b> không?');
-        $('#msg-link').attr('href', 'mypham/delete.php?id=' + id);
-        $('#del-mypham').modal();
+        $('#msg-link').attr('href', 'thanhvien/delete.php?id=' + id);
+        $('#del-user').modal();
     }
 // $(document).ready(function () {
         $('.btn-edit').click(function (e) {
             edit_ajax($(this).attr('data-id'));
-            $('#edit-mypham').modal();
+            $('#edit-user').modal();
        });
         // $('.btn-create').click(function (e) {
             // create();
@@ -370,14 +381,14 @@
         });
         $('#form-validate-create').validate({
             rules: {
-                Soluong:{
+                password:{
                     number: true,
                 }
             }
         });
         $('#form-validate-edit').validate({
             rules: {
-                SoluongED: {
+                passwordED: {
                     number: true,
                 }
             }

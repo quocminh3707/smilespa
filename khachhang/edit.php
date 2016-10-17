@@ -11,7 +11,7 @@ if(isset($_POST['id']))
 	$khachhang->Sdt = $_POST['SdtED'];
 	$khachhang->Email = $_POST['EmailED'];
 	$khachhang->DiaChi = $_POST['DiaChi'];
-	$khachhang->CoSo_id = $_POST['CoSo_id'];
+	$khachhang->MaCoSo = $_POST['MaCoSo'];
 	$khachhang->save();
 
 	header("Location: ../khach-hang.php");

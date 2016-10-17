@@ -2,7 +2,6 @@
 
 namespace Illuminate\Database\Eloquent;
 
-use Closure;
 use Faker\Generator as Faker;
 use InvalidArgumentException;
 
@@ -104,11 +103,15 @@ class FactoryBuilder
     {
         if ($this->amount === 1) {
             return $this->makeInstance($attributes);
-        }
+        } else {
+            $results = [];
 
-        return new Collection(array_map(function () use ($attributes) {
-            return $this->makeInstance($attributes);
-        }, range(1, $this->amount)));
+            for ($i = 0; $i < $this->amount; $i++) {
+                $results[] = $this->makeInstance($attributes);
+            }
+
+            return new Collection($results);
+        }
     }
 
     /**
@@ -116,8 +119,6 @@ class FactoryBuilder
      *
      * @param  array  $attributes
      * @return \Illuminate\Database\Eloquent\Model
-     *
-     * @throws \InvalidArgumentException
      */
     protected function makeInstance(array $attributes = [])
     {
@@ -126,32 +127,9 @@ class FactoryBuilder
                 throw new InvalidArgumentException("Unable to locate factory with name [{$this->name}] [{$this->class}].");
             }
 
-            $definition = call_user_func(
-                $this->definitions[$this->class][$this->name],
-                $this->faker, $attributes
-            );
+            $definition = call_user_func($this->definitions[$this->class][$this->name], $this->faker, $attributes);
 
-            $evaluated = $this->callClosureAttributes(
-                array_merge($definition, $attributes)
-            );
-
-            return new $this->class($evaluated);
+            return new $this->class(array_merge($definition, $attributes));
         });
-    }
-
-    /**
-     * Evaluate any Closure attributes on the attribute array.
-     *
-     * @param  array  $attributes
-     * @return array
-     */
-    protected function callClosureAttributes(array $attributes)
-    {
-        foreach ($attributes as &$attribute) {
-            $attribute = $attribute instanceof Closure
-                            ? $attribute($attributes) : $attribute;
-        }
-
-        return $attributes;
     }
 }

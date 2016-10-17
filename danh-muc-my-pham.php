@@ -37,9 +37,9 @@
                 </th>
                 <th class="center">Mã mỹ phẩm</th>
                 <th class="center">Tên mỹ phẩm</th>
-                <th class="center">Số lượng còn</th>
+                <th class="center">Số lượng</th>
+                 <th class="center">Còn lại</th>
                 <th class="center">Người nhập</th>
-                <th class="center">Ngày nhập</th>
                 <th class="center">Ngày cập nhập</th>
                 <th class="center">Tên cơ sở</th>
                 <th>
@@ -64,13 +64,13 @@
                             <td class="text-center"><?php echo $row['MaMP']; ?></td>
                             <td class="text-center"><?php echo $row['TenMP']; ?></td>
                             <td class="text-center"><?php echo $row['Soluong']; ?></td>
-                            <td class="text-center"></td>
+                            <td class="text-center"><?php echo $row['Soluong']; ?></td>
                             <td class="text-center"><?php echo $row['created_at']; ?></td>
                             <td class="text-center"><?php echo $row['updated_at']; ?></td>
                             <td class="text-center">
                                 <?php 
-                                $coso = $row['CoSo_id'];
-                                if($coso == "0" ){
+                                $macoso = $row['MaCoSo'];
+                                if($macoso == "CS1" ){
                                     echo "CS Huế";
                                 }else{
                                     echo "CS Sài Gòn";
@@ -126,7 +126,7 @@
                         <div class="form-group" style="display: none;">
                             <label class="col-sm-3 control-label no-padding-right">Tên cơ sở</label>
                             <div class="col-sm-9">
-                                <select name="CoSo_id" id="CoSo_id" class="form-control required" placeholder="Cơ sở" aria-required="true">
+                                <select name="MaCoSo" class="form-control required" placeholder="Cơ sở" aria-required="true">
                                     <option value="0">Cơ sở Huế</option>
                                     <option value="1">Cơ sở Sài Gòn</option>
                                 </select>
@@ -193,7 +193,7 @@
                         <div class="form-group" style="display: none;">
                             <label class="col-sm-3 control-label no-padding-right">Tên cơ sở</label>
                             <div class="col-sm-9">
-                                <select name="CoSo_id" id="CoSo_id2" class="form-control required" placeholder="Cơ sở" aria-required="true">
+                                <select name="MaCoSo2" id="MaCoSo" class="form-control required" placeholder="Cơ sở" aria-required="true">
                                     <option value="CS1">Cơ sở Huế</option>
                                     <option value="CS2">Cơ sở Sài Gòn</option>
                                 </select>
@@ -233,7 +233,7 @@
                     $('#IDHidden2').val(obj.id);
                     $('#MaMP2').val(obj.MaMP);
                     $('#TenMP2').val(obj.TenMP);
-                    $('#CoSo_id2').val(obj.CoSo_id);
+                    $('#MaCoSo2').val(obj.CoSo_id);
                     $('#Soluong2').val(obj.Soluong);
                     
                 }

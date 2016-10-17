@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
 	$khachhang->Sdt = $_POST['Sdt'];
 	$khachhang->Email = $_POST['Email'];
 	$khachhang->DiaChi = $_POST['DiaChi'];
-	$khachhang->CoSo_id = $_POST['CoSo_id'];
+	$khachhang->MaCoSo = $_POST['MaCoSo'];
 	$khachhang->save();
 
 	header("Location: ../khach-hang.php");

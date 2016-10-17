@@ -35,10 +35,10 @@
 						<span class="lbl"></span>
 					</label>
 				</th>
-				<th class="center">Thêm Dịch vụ</th>
+				<th class="center">Đăng ký</th>
 				<th class="center">Họ tên</th>
 				<th class="center">Số điện thoại</th>
-				<th class="center">Email</th>
+				<th class="center">Facebook</th>
 				<th class="center">Địa chỉ</th>
 				<th class="center">Tên cơ sở</th>
 				<th></th>
@@ -48,11 +48,14 @@
 				
 				
 				<?php
-				$all_khachhang = Model_khachhang::all()->toArray();
+				//$all_khachhang = Model_KhachHang::all()->toArray();
+				$all_khachhang = Model_KhachHang::paginate(ITEMS_PER_PAGE);
+				$all_khachhang->setPath($_SERVER['PHP_SELF']);
+
 				 foreach($all_khachhang as $row)
 				 {
 				   ?>	
-							<tr data-user-id='<?php echo $row['id'] ?>'>
+							<tr data-khachhang-id='<?php echo $row['id'] ?>'>
 							<th class="center">
 							<label class="pos-rel">
 									<input type="checkbox" class='row-select' name='selected[]' value='<?php echo $row['id'] ?>' class="ace">
@@ -61,25 +64,31 @@
 							</th>
 							<td class="center">
 								<div class="action-buttons ui-pg-div">
-									<a href='#dangky' class="btn-dangky-dichvu ui-icon ace-icon fa fa-plus-circle purple"></button>
-
-									<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-										<i class="ace-icon fa fa-angle-double-down"></i>
-										<span class="sr-only">Details</span>
+									<a href='#' class="ace-icon btn-dangky-dichvu green">
+										<i class="ace-icon fa fa-pencil bigger-130"></i>
+									</a>
+									<a class="orange" href="#" onclick='myFunction()'>
+										<i class="ace-icon fa fa-search-plus bigger-130"></i>
 									</a>
 								</div>
 							</td>
-							<td class="text-center"><?php echo "<a href='dangky-dichvu/dangky-dichvu.php' target='_blank'>".$row['Ho'];echo "&nbsp";echo $row['Ten'].'</a>'; ?></td>
+							<td class="text-center">
+								<?php echo "<a class='link-dangky' onclick='myFunction()'>".$row['Ho'];echo "&nbsp"; echo $row['Ten'].'</a>'; ?>	
+							</td>
 							<td class="text-center"><?php echo $row['Sdt']; ?></td>
-							<td class="text-center"><?php echo $row['Email']; ?></td>
+							<td class="text-center">
+								<?php 
+									echo "<a href='".$row["Email"]."' target='_blank'>".$row['Email']."</a>"; 
+								?>		
+							</td>
 							<td class="text-center"><?php echo $row['DiaChi']; ?></td>
 							<td class="text-center">
                                 <?php 
-                                $coso = $row['CoSo_id'];
-                                if($coso == "0" ){
-                                    echo "Cơ sở Huế";
+                                $macoso = $row['MaCoSo'];
+                                if($macoso == "CS1" ){
+                                    echo "CS Huế";
                                 }else{
-                                    echo "Cơ sở Sài Gòn";
+                                    echo "CS Sài Gòn";
                                 }
                                 ?>
                             </td>
@@ -96,13 +105,9 @@
 									</a>
 								</div>
 							</td>
-							<tr class="detail-row">
-								<?php
-									require $_SERVER['DOCUMENT_ROOT'] . '/spa/dangky-dichvu/dangky-dichvu.php';
-								?>
-							</tr>
 							<?php
 				 }
+				 echo $all_khachhang->links();
 				 ?>
 				
 			
@@ -138,7 +143,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right">Email</label>
+							<label class="col-sm-3 control-label no-padding-right">Link Facebook</label>
 							<div class="col-sm-9">
 								<input type="text" name="Email" id="Email" value="" placeholder="Email" class="form-control required" aria-required="true">
 							</div>
@@ -152,7 +157,7 @@
 						<div class="form-group" style="display: none;">
 							<label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
 							<div class="col-sm-9">
-								<select name="CoSo_id" id="CoSo_id" class="form-control required" placeholder="Cơ sở" aria-required="true">
+								<select name="MaCoSo" class="form-control required" placeholder="Cơ sở" aria-required="true">
 									<option value="0">Cơ sở Huế</option>
 									<option value="1">Cơ sở Sài Gòn</option>
 								</select>
@@ -217,7 +222,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Email</label>
+						<label class="col-sm-3 control-label no-padding-right">Link Facebook</label>
 						<div class="col-sm-9">
 							<input type="text" name="EmailED" id="Email2" value="" placeholder="Email" class="form-control required" aria-required="true">
 						</div>
@@ -231,7 +236,7 @@
 					<div class="form-group" style="display: none;">
 						<label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
 						<div class="col-sm-9">
-							<select name="CoSo_id" id="CoSo_id2" class="form-control required" placeholder="Cơ sở" aria-required="true">
+							<select name="MaCoSo" class="form-control required" placeholder="Cơ sở" aria-required="true">
 								<option value="0">Cơ sở Huế</option>
 								<option value="1">Cơ sở Sài Gòn</option>
 							</select>
@@ -247,8 +252,11 @@
 	</div>
 </div>
 
-<script>		
- function edit_ajax(id) {
+<script>
+	function myFunction() {
+	    window.open("dangky-dichvu/dangky-dichvu.php", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1000,height=400");
+	}		
+	 function edit_ajax(id) {
         $.ajax({
             url: 'khachhang/get.php?id=' + id,
             type: 'GET',
@@ -273,74 +281,68 @@
                 }
             }
         });
-    }
+    }	
 	function del(id, name) {
         $('#msg-delete').html('Bạn có chắc chắn muốn xóa khách hàng <b>' + name + '</b> không?');
         $('#msg-link').attr('href', 'khachhang/delete.php?id=' + id);
         $('#del-khachhang').modal();
     }
 // $(document).ready(function () {
-        $('.btn-edit').click(function (e) {
-            edit_ajax($(this).attr('data-id'));
-            $('#edit-khachhang').modal();
-       });
-        // $('.btn-create').click(function (e) {
-            // create();
-        // });
-        // $('.btn-delete').click(function (e) {
-            // del($(this).data('objid'), $(this).data('objname'));
-        // });
-        // $('#form-validate').validate();
+    $('.btn-edit').click(function (e) {
+        edit_ajax($(this).attr('data-id'));
+        $('#edit-khachhang').modal();
+   });
+    // $('.btn-create').click(function (e) {
+        // create();
     // });
-		$('.btn-delete').click(function (e) {
-			var name = $(this).attr('data-name');
-			var id = $(this).attr('data-id');
-            del(id, name);
-        });
-        $('#select-all').click(function(){
-        	if($(this).is(':checked')){
-        		$('.row-select').prop('checked', true);
-        	}else{
-				$('.row-select').prop('checked', false);
-        	}
-        });
-        $('.btn-delete-selected').click(function(){
-        	swal({   
-        		title: "Vui lòng chọn loại dịch vụ?",   
-        		type: "warning",   
-        		showCancelButton: true,   
-        		confirmButtonText: "Yes, delete it!",   
-        		closeOnConfirm: false,   
-        	}, function(isConfirm){ 
-        		if(isConfirm){
-        			$('#form-delete-selected').submit();	
-        		} 
-        		
-        	});
-        });
-        $('#form-validate-create').validate({
-        	rules: {
-        		Ho: {
-        			required: true,
-        		},
-        		Sdt: {
-        			number: true,
-        		},
-        		Email: {
-        			email: true,
-        		},
-        	}
-        });
-        $('#form-validate-edit').validate({
-        	rules: {
-        		SdtED: {
-        			number: true,
-        		},
-        		EmailED: {
-        			email: true,
-        		},
-        	}
-        });
+    // $('.btn-delete').click(function (e) {
+        // del($(this).data('objid'), $(this).data('objname'));
+    // });
+    // $('#form-validate').validate();
+// });
+	$('.btn-delete').click(function (e) {
+		var name = $(this).attr('data-name');
+		var id = $(this).attr('data-id');
+        del(id, name);
+    });
+    $('#select-all').click(function(){
+    	if($(this).is(':checked')){
+    		$('.row-select').prop('checked', true);
+    	}else{
+			$('.row-select').prop('checked', false);
+    	}
+    });
+    $('.btn-delete-selected').click(function(){
+    	swal({   
+    		title: "Vui lòng chọn loại dịch vụ?",   
+    		type: "warning",   
+    		showCancelButton: true,   
+    		confirmButtonText: "Yes, delete it!",   
+    		closeOnConfirm: false,   
+    	}, function(isConfirm){ 
+    		if(isConfirm){
+    			$('#form-delete-selected').submit();	
+    		} 
+    		
+    	});
+    });
+    $('#form-validate-create').validate({
+    	rules: {
+    		Ho: {
+    			required: true,
+    		},
+    		Sdt: {
+    			number: true,
+    		},
+    	}
+    });
+    $('#form-validate-edit').validate({
+    	rules: {
+    		SdtED: {
+    			number: true,
+    		},
+    	}
+    });
 </script>		
 					<!-- PAGE CONTENT ENDS -->
 <?php  

@@ -2,11 +2,12 @@
 
 namespace Illuminate\Database\Console\Migrations;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Migrations\Migrator;
 use Symfony\Component\Console\Input\InputOption;
 
-class ResetCommand extends BaseCommand
+class ResetCommand extends Command
 {
     use ConfirmableTrait;
 
@@ -55,18 +56,17 @@ class ResetCommand extends BaseCommand
             return;
         }
 
-        $this->migrator->setConnection($this->option('database'));
+        $this->migrator->setConnection($this->input->getOption('database'));
 
-        // First, we'll make sure that the migration table actually exists before we
-        // start trying to rollback and re-run all of the migrations. If it's not
-        // present we will just bail out with a info message for the developer.
         if (! $this->migrator->repositoryExists()) {
-            return $this->comment('Migration table not found.');
+            $this->output->writeln('<comment>Migration table not found.</comment>');
+
+            return;
         }
 
-        $this->migrator->reset(
-            $this->getMigrationPaths(), $this->option('pretend')
-        );
+        $pretend = $this->input->getOption('pretend');
+
+        $this->migrator->reset($pretend);
 
         // Once the migrator has run we will grab the note output and send it out to
         // the console screen, since the migrator itself functions without having
