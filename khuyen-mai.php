@@ -328,13 +328,13 @@
     $('#form-validate-create').validate({
     	rules: {
             MaKM:{
-                require: true,
+                required: true,
             },
     		TenKM:{
-    			require: true,
+    			required: true,
     		},
             SoTien:{
-                require: true,
+                required: true,
                 number: true,
             },
     	}
@@ -342,7 +342,7 @@
     $('#form-validate-edit').validate({
         rules: {
             MaKM2:{
-                require: true,
+                required: true,
             },
             SoTien2:{
                 number: true,
@@ -370,11 +370,9 @@
 	    if (loaikhuyenmai == 1) {
 	        //Khuyến mãi tiền mặt
 	        $('#khuyenmai-tienED').show();
-	        $('#PhanTram2').val('');
 	        $('#khuyenmai-phantramED').hide();
 	    } else {
 	        //Khuyến mãi phần trăm
-	        $('#SoTien2').val('');
 	        $('#khuyenmai-tienED').hide();
 	        $('#khuyenmai-phantramED').show();
 	    }

@@ -7,6 +7,14 @@
 				</div>
 				<form id="form-dangky-dichvu" method="post" action="dangky-dichvu/create.php" class="form-horizontal cmxform" novalidate="novalidate">
 					<input type='hidden' name='khachhang_id'/>
+					<input type='hidden' name='SoLanDieuTri_id' 
+						value='<?php 
+						$all_dieutri = Model_DieuTri::all(); 
+						foreach($all_dieutri as $dieutri){
+							echo $dieutri["id"];
+						}
+
+						?>'>
 					<div class="modal-body">
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right">Dịch vụ</label>
