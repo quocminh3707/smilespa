@@ -1,5 +1,6 @@
 <?php  
 	require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
+	$KM_id = $_GET["id"];
 	
 ?>
 <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
@@ -96,6 +97,9 @@
 													<?php
 													$dkdichvu = Model_DangKyDichVu::all();
 													foreach($dkdichvu as $row){
+														if($row->khachhang_id == $KM_id){
+															echo 
+														$row->khachhang_id;
 													?>
 														
 														<tr>
@@ -214,6 +218,7 @@
 															</td>
 														</tr>
 													<?php
+															}
 													 	}
 													?>
 										

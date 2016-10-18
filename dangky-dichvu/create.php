@@ -4,6 +4,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 
 // echo "<pre>";
 // print_r($_POST);
+// exit();
+$KM_id = $_POST['khachhang_id'];
 
 //show all dich vu
 $DichVu_id = $_POST['DichVu_id'];
@@ -46,6 +48,6 @@ if (isset($_POST['submit'])) {
 	$dangkydichvu->khachhang_id = $_POST['khachhang_id'];
 	$dangkydichvu->save();
 
-	header("Location: ../dangky-dichvu/dangky-dichvu.php");
+	header("Location: ../dangky-dichvu/dangky-dichvu.php?id=$KM_id");
 }
 ?>
