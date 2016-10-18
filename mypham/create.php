@@ -10,7 +10,15 @@ if (isset($_POST['submit'])) {
 	$mypham->MaCoSo = $_POST['MaCoSo'];
 	$mypham->Soluong = $_POST['Soluong'];
 	$mypham->save();
-
+	$themthanhcong ="<div class='alert alert-success'>
+						<button class='close' data-dismiss='alert'>
+							<i class='ace-icon fa fa-times'></i>
+						</button>
+						<i class='ace-icon fa fa-hand-o-right'></i>
+						Bạn đã thêm mỹ phẩm thành công
+					</div>
+					";
+	$_SESSION['thongbaothem'] = $themthanhcong;
 	header("Location: ../danh-muc-my-pham.php");
 }
 ?>

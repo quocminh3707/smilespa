@@ -12,7 +12,15 @@ if(isset($_POST['id']))
 	$dichvu->MaCoSo = $_POST['MaCoSo'];
 	$dichvu->DonGia = $_POST['DonGiaED'];
 	$dichvu->save();
-
+	$suathanhcong ="<div class='alert alert-info'>
+						<button class='close' data-dismiss='alert'>
+							<i class='ace-icon fa fa-times'></i>
+						</button>
+						<i class='ace-icon fa fa-hand-o-right'></i>
+						Bạn đã chỉnh sữa dịch vụ thành công
+					</div>
+					";
+		$_SESSION['thongbaosua'] = $suathanhcong;
 	header("Location: ../dich-vu.php");
 }
 ?>

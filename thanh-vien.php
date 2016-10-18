@@ -2,7 +2,6 @@
     require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
     require DIRECT_DIR . 'template-top.php'; 
     require DIRECT_DIR . 'template-left.php'; 
-    
 ?>
 <div class="page-header">
     <h1>
@@ -13,6 +12,7 @@
         </small>
     </h1>
 </div>
+<?php require DIRECT_DIR . '/thanhvien/messenger.php';  ?>
 <form id='form-delete-selected' action='thanhvien/delete-selected.php' method='post'>
     
     <div class="pull-right mr-bottom" >
@@ -120,13 +120,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="modalTitle">Thêm mới</h4>
             </div>
-            <form id="form-validate" method="post" action="thanhvien/create.php" class="form-horizontal" novalidate="novalidate">
+            <form id="form-validate-create" method="post" action="thanhvien/create.php" class="form-horizontal" novalidate="novalidate">
                 <div class="modal-body">
                     <input type="hidden" name="IDHidden" id="IDHidden" value="">
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Họ và tên</label>
                         <div class="col-sm-5">
-                            <input type="text" name="Ho" placeholder="Họ" class="form-control">
+                            <input type="text" name="Ho" placeholder="Họ" class="form-control required">
                         </div>
                         <div class="col-sm-4">
                             <input type="text" name="Ten" placeholder="Tên" class="form-control required" aria-required="true">
@@ -145,7 +145,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Số điện thoại</label>
                         <div class="col-sm-9">
-                            <input type="text" name="Sdt" placeholder="Số điện thoại" class="form-control">
+                            <input type="text" name="Sdt" placeholder="Số điện thoại" class="form-control required">
                         </div>
                     </div>
                     <div class="form-group">
@@ -227,13 +227,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="modalTitle">Thêm mới</h4>
             </div>
-            <form id="form-validate" method="post" action="thanhvien/edit.php" class="form-horizontal" novalidate="novalidate">
+            <form id="form-validate-edit" method="post" action="thanhvien/edit.php" class="form-horizontal" novalidate="novalidate">
                 <div class="modal-body">
                     <input type="hidden" name="id" id="IDHiddenED" value="">
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Họ và tên</label>
                         <div class="col-sm-5">
-                            <input type="text" name="HoED" id="HoED" placeholder="Họ" class="form-control">
+                            <input type="text" name="HoED" id="HoED" placeholder="Họ" class="form-control required">
                         </div>
                         <div class="col-sm-4">
                             <input type="text" name="TenED" id="TenED" placeholder="Tên" class="form-control required" aria-required="true">
@@ -252,7 +252,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Số điện thoại</label>
                         <div class="col-sm-9">
-                            <input type="text" name="SdtED" id="SdtED" placeholder="Số điện thoại" class="form-control">
+                            <input type="text" name="SdtED" id="SdtED" placeholder="Số điện thoại" class="form-control required">
                         </div>
                     </div>
                     <div class="form-group">
@@ -381,16 +381,16 @@
         });
         $('#form-validate-create').validate({
             rules: {
-                password:{
+                Sdt:{
                     number: true,
-                }
+                },
             }
         });
         $('#form-validate-edit').validate({
             rules: {
-                passwordED: {
+                Sdt:{
                     number: true,
-                }
+                },
             }
         });
 </script>       

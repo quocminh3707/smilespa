@@ -41,7 +41,7 @@
 							<label class="col-sm-3 control-label no-padding-right">Khuyến mãi</label>
 							<div class="col-sm-9">
 								<select name='KhuyenMai_id'>
-									<option value="-1">--- Không khuyến mãi ---</option>
+									<option value="0">--- Không khuyến mãi ---</option>
 	                            	<?php 
 	                            	$all_khuyenmai = Model_KhuyenMai::all();
 	                            	foreach($all_khuyenmai as $khuyenmai){

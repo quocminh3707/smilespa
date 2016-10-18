@@ -68,19 +68,26 @@
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="row">
+									
 									<div class="col-xs-12">
+									<div class="pull-right mr-bottom">
+										<a href="#create-khuyenmai" role="button" class="btn btn-xs btn-success btn-dangky-dichvu" data-toggle="modal">
+												<i class="ace-icon fa fa-plus bigger-120"></i>
+												Thêm
+										</a>
+									</div>
 										<table id="simple-table" class="table  table-bordered table-hover">
 											<thead>
 												<tr>
-													<th>Ngày đăng ký</th>
-													<th>Dịch vụ</th>
-													<th>Điều trị</th>
-													<th>Giá dịch vụ</th>
-													<th>KM</th>
-													<th>Tổng thanh toán</th>
-													<th>Lần thanh toán</th>
-													<th>Nợ</th>
-													<th>Ghi chú</th>
+													<th class="center">Ngày đăng ký</th>
+													<th class="center">Dịch vụ</th>
+													<th class="center">Điều trị</th>
+													<th class="center">Giá dịch vụ</th>
+													<th class="center">KM</th>
+													<th class="center">Tổng thanh toán</th>
+													<th class="center">Tình trạng thanh toán</th>
+													<th class="center">Nợ</th>
+													<th class="center">Ghi chú</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -90,32 +97,86 @@
 													$dkdichvu = Model_DangKyDichVu::all();
 													foreach($dkdichvu as $row){
 													?>
+														
 														<tr>
-															<th><?php echo $row->created_at ?></th>
-															<th><?php echo $row->dichvu->TenDichVu ?></th>
-															<th><?php echo $row->dieutri->id ?></th>
-															<th><?php echo $row->GiaDichVu ?></th>
-															<th><?php
-																if($row->KhuyenMai_id == -1){
+															<th class="center"><?php echo $row->created_at ?></th>
+															<th class="center"><?php echo $row->dichvu->TenDichVu ?></th>
+															<th class="center"><?php echo $row->dieutri->id ?></th>
+															<th class="center">
+																<?php 
+																	$giadichvu = $row->GiaDichVu;
+																	echo number_format($giadichvu, '0', '.', '.').' VNĐ';
+																?>
+															</th>
+															<th class="center"><?php
+																if($row->KhuyenMai_id == 0){
 																	//khong khuyen mai
-																	echo "khong";
+																	echo "không";
 																}else{
 																	//co khuyen mai
 																	if($row->khuyenmai->LoaiKM == 1){
 																		//tien
-																		echo $row->khuyenmai->SoTien. " VND";
+																		$giakhuyenmai = $row->khuyenmai->SoTien;
+																		echo number_format($giakhuyenmai, '0', '.', '.').' VNĐ';
 																	}else{
 																		//phan tram
 																		echo $row->khuyenmai->PhanTram. " %";
+																		$giadichvu = $row->GiaDichVu;
+																		$phantram = $row->khuyenmai->PhanTram;
+																		$giaphantram = ($giadichvu/100)*$phantram;
+																		echo "</br>( - ".number_format($giaphantram, '0', '.', '.').' VNĐ )';
+																		// echo "</br>( - ".$giaphantram." )";
 																	}
 																}	
 																
 															?>
 																	
 															</th>
-															<th></th>
-															<th></th>
-															<th></th>
+															<th class="center">
+																<?php 
+
+																	if($row->KhuyenMai_id == 0){
+																	//khong khuyen mai
+																		$thanhtoan= $row->GiaDichVu;
+																		echo number_format($thanhtoan, '0', '.', '.').' VNĐ';
+																	}else{
+																		//co khuyen mai
+																		if($row->khuyenmai->LoaiKM == 1){
+																			//tien
+																			$giadichvu = $row->GiaDichVu;
+																			$sotien = $row->khuyenmai->SoTien;
+																			$thanhtoantien = $giadichvu - $sotien;
+																			echo number_format($thanhtoantien, '0', '.', '.').' VNĐ';
+																		}else{
+																			//phan tram
+																			$giadichvu = $row->GiaDichVu;
+																			$phantram = $row->khuyenmai->PhanTram;
+																			$giaphantram = ($giadichvu/100)*$phantram;
+																			$thanhtoanphantram = $giadichvu - $giaphantram;
+																			echo number_format($thanhtoanphantram, '0', '.', '.').' VNĐ';
+																		}
+																	}	
+																 ?>	
+															</th>
+															<th class="center">
+																<?php 
+																	if($row->lanthanhtoan == 0){
+																		//chua thanh toan
+																		echo "<a href='#'>Chưa thanh toán</a>";
+																	}else{
+																		//da thanh toan
+																	}
+																?>	
+															</th>
+															<th>
+																<?php
+																if($row->lanthanhtoan == 0){
+																	
+																	}else{
+
+																	}
+																?>
+															</th>
 															<th></th>
 															<td>
 																<div class="hidden-sm hidden-xs btn-group">

@@ -17,6 +17,7 @@
         </small>
     </h1>
 </div>
+<?php require DIRECT_DIR . '/dichvu/messenger.php';  ?>
 <form id='form-delete-selected' action='dichvu/delete-selected.php' method='post'>
     
     <div class="pull-right mr-bottom" >

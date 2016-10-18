@@ -13,6 +13,7 @@
         </small>
     </h1>
 </div>
+<?php require DIRECT_DIR . '/mypham/messenger.php';  ?>
 <form id='form-delete-selected' action='mypham/delete-selected.php' method='post'>
     
     <div class="pull-right mr-bottom" >

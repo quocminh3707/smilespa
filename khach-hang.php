@@ -254,7 +254,7 @@
 
 <script>
 	function myFunction() {
-	    window.open("dangky-dichvu/dangky-dichvu.php", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1000,height=400");
+	    window.open("dangky-dichvu/dangky-dichvu.php", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=400");
 	}		
 	 function edit_ajax(id) {
         $.ajax({

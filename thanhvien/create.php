@@ -19,6 +19,15 @@ if (isset($_POST['submit'])) {
 	$user->level = $_POST['level'];
 	$user->save();
 
+	$themthanhcong ="<div class='alert alert-success'>
+						<button class='close' data-dismiss='alert'>
+							<i class='ace-icon fa fa-times'></i>
+						</button>
+						<i class='ace-icon fa fa-hand-o-right'></i>
+						Bạn đã thêm tài khoản thành công
+					</div>
+					";
+	$_SESSION['thongbaothem'] = $themthanhcong;
 	header("Location: ../thanh-vien.php");
 }
 ?>
