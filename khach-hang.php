@@ -1,4 +1,7 @@
 <?php  
+// echo "<pre>";
+// 	print_r($_SERVER);
+// 	exit();
 	require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 	require DIRECT_DIR . 'template-top.php'; 
 	require DIRECT_DIR . 'template-left.php'; 
@@ -18,7 +21,7 @@
 	<div class="pull-right mr-bottom" >
 		<a href="#create-khachhang" role="button" class="btn btn-xs btn-success btn-create" data-toggle="modal">
 				<i class="ace-icon fa fa-plus bigger-120"></i>
-				Thêm
+				Thêm khách hàng
 		</a>
 		<a href="#del-khachhang" role="button" class="btn btn-xs btn-danger btn-delete-selected">
 				<i class="ace-icon fa fa-trash-o bigger-120"></i>
@@ -65,9 +68,9 @@
 							<td class="center">
 								<div class="action-buttons ui-pg-div">
 									<a href='#' class="ace-icon btn-dangky-dichvu green">
-										<i class="ace-icon fa fa-pencil bigger-130"></i>
+										<i class="ui-icon ace-icon fa fa-plus-circle purple"></i>
 									</a>
-									<a class="orange" href="#" onclick='myFunction()'>
+									<a class="orange btn-show-dangky" data-id="<?php  echo $row['id']; ?>" href="#">
 										<i class="ace-icon fa fa-search-plus bigger-130"></i>
 									</a>
 								</div>
@@ -184,9 +187,6 @@
                 <h4 class="modal-title">Xác nhận xóa</h4>
             </div>
             <div class="modal-body" id="msg-delete">Bạn có chắc chắn muốn xóa dịch vụ <b>
-				<?php 
-				
-				?>
 				</b> không?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
@@ -253,9 +253,11 @@
 </div>
 
 <script>
-	function myFunction() {
-	    window.open("dangky-dichvu/dangky-dichvu.php", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=400");
-	}		
+	$('.btn-show-dangky').click(function (e) {
+		
+		var id = $(this).attr('data-id');
+        window.open('dangky-dichvu/dangky-dichvu.php?id=' + id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=80,width=1200,height=500");
+    });		
 	 function edit_ajax(id) {
         $.ajax({
             url: 'khachhang/get.php?id=' + id,

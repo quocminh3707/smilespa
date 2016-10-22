@@ -97,19 +97,26 @@
 					<ul class="nav ace-nav">
 						<li id="cauHinhTacNghiep" class="light-blue dropdown-modal">
 					        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
-					            Cơ sở Huế
+
+					            <?php 
+					            if($_SESSION['coso'] == 1){
+					            	echo "Cơ sở Huế";
+					            }else{
+					            	echo "Cơ sở Sài Gòn";
+					            }
+					            ?>
 					                            <i class="ace-icon fa fa-caret-down"></i>
-					                    </a>
-					                    <ul id="CauHinh" class="dropdown-menu dropdown-menu-right">
+					        </a>
+					                    <ul class="dropdown-menu dropdown-menu-right">
 							                <li>
 							                    <div style="text-align: center; padding: 0 10px; white-space: nowrap;">
-							                        <form method="post" action="" class="form-inline">
+							                        <form method="post" id="form-change-coso" class="form-inline">
 							                            <label for="nam" class="control-label inline" style="color: black; font-weight: bold; padding-left: 10px;">Chọn cơ sở: </label><br>
-							                            <select name="CauHinhCoSo" id="CauHinhCoSo" class="form-control required">
-							                                <option value="CS1" selected="selected">Cơ sở Huế</option>
-															<option value="CS2">Cơ sở Sài Gòn</option>
+							                            <select name="CoSo_Id" id="CauHinhCoSo" class="form-control">
+							                                <option value="1" <?php if($_SESSION['coso'] == 1) echo "selected='selected'" ?>>Cơ sở Huế</option>
+															<option value="2" <?php if($_SESSION['coso'] == 2) echo "selected='selected'" ?>>Cơ sở Sài Gòn</option>
 							                            </select>
-							                            <button type="submit" class="btn btn-xs btn-primary">
+							                            <button type='submit' name='submit_change_coso' class="btn btn-xs btn-primary">
 							                                <i class="ace-icon fa fa-check bigger-120"></i>
 							                            </button>
 							                            <button class="btn btn-xs btn-danger" type="button" onclick="$('#cauHinhTacNghiep').removeClass('open');">

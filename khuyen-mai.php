@@ -49,7 +49,7 @@
 				
 				
 				<?php
-				$all_khuyenmai= Model_KhuyenMai::all()->toArray();
+				$all_khuyenmai= Model_KhuyenMai::where('CoSo_Id', $_SESSION['coso'])->get()->toArray();
 				 foreach($all_khuyenmai as $row)
 				 {
 				   ?>	
@@ -86,15 +86,15 @@
 								?>
 							</td>
 							<td class="text-center">
-								 <?php 
-                                $macoso = $row['MaCoSo'];
-                                if($macoso == "CS1" ){
-                                    echo "CS Huế";
+                                <?php 
+                                $coso = $row['CoSo_Id'];
+                                if($coso == 1 ){
+                                    echo "Cơ sở Huế";
                                 }else{
-                                    echo "CS Sài Gòn";
+                                    echo "Cơ sở Sài Gòn";
                                 }
                                 ?>
-							</td>
+                            </td>
 							<td class="text-center">
 								<div class="btn-group">
 									<a href="#edit-khuyenmai" role="button" data-id="<?php  echo $row['id']; ?>" data-name="<?php echo $row['MaKM'] ?>" class="btn btn-xs btn-info btn-edit">
@@ -168,7 +168,7 @@
                         <label class="col-sm-4 control-label no-padding-right">Mã cơ sở</label>
                         <div class="col-sm-8">
                             <select name="MaCoSo" id="MaCoSo" class="form-control required" aria-required="true">
-                                <option value="CS1">Cơ sở Huế</option>
+                                <option value="CS1" selected>Cơ sở Huế</option>
 								<option value="CS2">Cơ sở Sài Gòn</option>
 
                             </select>
@@ -250,7 +250,7 @@
                         <label class="col-sm-4 control-label no-padding-right">Mã cơ sở</label>
                         <div class="col-sm-8">
                             <select name="MaCoSo" id="MaCoSo2" class="form-control required" aria-required="true">
-                                <option value="CS1">Cơ sở Huế</option>
+                                <option value="CS1" selected>Cơ sở Huế</option>
 								<option value="CS2">Cơ sở Sài Gòn</option>
 
                             </select>

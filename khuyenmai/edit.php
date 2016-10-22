@@ -9,7 +9,7 @@ if(isset($_POST['id'])){
 	$khuyenmai->LoaiKM = $_POST['LoaiKM2'];
 	$khuyenmai->PhanTram = $_POST['PhanTram2'];
 	$khuyenmai->SoTien = $_POST['SoTien2'];
-	$khuyenmai->MaCoSo = $_POST['MaCoSo2'];
+	$khuyenmai->CoSo_Id = $_SESSION['coso'];
 	$khuyenmai->save();
 	$suathanhcong ="<div class='alert alert-info'>
 						<button class='close' data-dismiss='alert'>

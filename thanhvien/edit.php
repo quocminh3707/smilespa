@@ -14,6 +14,7 @@ if(isset($_POST['id']))
 	$user->Email = $_POST['EmailED'];
 	$user->Dia_Chi = $_POST['Dia_ChiED'];
 	$user->Tinh_Trang = $_POST['Tinh_TrangED'];
+	$user->CoSo_Id = $_SESSION['coso'];
 	$user->level = $_POST['levelED'];
 	$user->save();
 

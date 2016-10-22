@@ -41,6 +41,7 @@
                 <th class="center">Địa chỉ</th>
                 <th class="center">Tình trạng</th>
                 <th class="center">Nhóm</th>
+                <th class="center">Tên cở sở</th>
                 <th class="center"></th>
                 <th>
                 </th>
@@ -50,7 +51,7 @@
                 
                 
                 <?php
-                $all_user = Model_User::all()->toArray();
+                $all_user = Model_User::where('CoSo_Id', $_SESSION['coso'])->get()->toArray();
                  foreach($all_user as $row)
                  {
                    ?>   
@@ -80,14 +81,24 @@
                              <td class="text-center">
                                 <?php 
                                     $nhom = $row['level'];
-                                    if($nhom == 0){
+                                    if($nhom == 1){
                                         echo "Nhóm quản trị";
-                                    }else if($nhom == 1){
-                                        echo "Nhóm Biên tập";
                                     }else if($nhom == 2){
+                                        echo "Nhóm Biên tập";
+                                    }else if($nhom == 3){
                                         echo "Nhóm thành viên";
                                     }
                                  ?>    
+                            </td>
+                            <td class="text-center">
+                                <?php 
+                                $coso = $row['CoSo_Id'];
+                                if($coso == 1 ){
+                                    echo "Cơ sở Huế";
+                                }else{
+                                    echo "Cơ sở Sài Gòn";
+                                }
+                                ?>
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
@@ -184,9 +195,9 @@
                         <label class="col-sm-3 control-label no-padding-right">Mã nhóm</label>
                         <div class="col-sm-9">
                             <select name="level" class="form-control required" aria-required="true">
-                                <option value="0">Nhóm thành viên</option>
-                                <option value="1">Biên tập viên</option>
-                                <option value="2">Nhóm quản trị</option>
+                                <option value="1">Nhóm quản trị</option>
+                                <option value="2">Biên tập viên</option>
+                                <option value="3">Nhóm thành viên</option>
                             </select>
                         </div>
                     </div>
@@ -291,9 +302,9 @@
                         <label class="col-sm-3 control-label no-padding-right">Mã nhóm</label>
                         <div class="col-sm-9">
                             <select name="levelED" id="levelED" class="form-control required" aria-required="true">
-                                <option value="0">Nhóm thành viên</option>
-                                <option value="1">Biên tập viên</option>
-                                <option value="2">Nhóm quản trị</option>
+                                <option value="1">Nhóm quản trị</option>
+                                <option value="2">Biên tập viên</option>
+                                <option value="3">Nhóm thành viên</option>
                             </select>
                         </div>
                     </div>

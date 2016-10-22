@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	define('ITEMS_PER_PAGE', 50);
+	define('ITEMS_PER_PAGE', 2);
 	define('SOURCE_FOLDER', 'spa/');
 	define('DIRECT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/'. SOURCE_FOLDER);
 	require $_SERVER['DOCUMENT_ROOT'] . '/'.SOURCE_FOLDER.'vendor/autoload.php';
@@ -62,3 +62,14 @@ function redirect($url){
 	header('location: '. $url);
 	exit();
 };
+
+
+
+if(!isset($_SESSION['coso'])){
+	$_SESSION['coso'] = 1;
+}
+
+
+if(isset($_POST['submit_change_coso'])){
+	$_SESSION['coso'] = $_POST['CoSo_Id'];
+}

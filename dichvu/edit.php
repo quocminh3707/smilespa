@@ -9,7 +9,7 @@ if(isset($_POST['id']))
 	$dichvu->MaDichVu = $_POST['MaDichVu'];
 	$dichvu->TenDichVu = $_POST['TenDichVu'];
 	$dichvu->TinhTrang = $_POST['TinhTrang'];
-	$dichvu->MaCoSo = $_POST['MaCoSo'];
+	$dichvu->CoSo_Id = $_SESSION['coso'];
 	$dichvu->DonGia = $_POST['DonGiaED'];
 	$dichvu->save();
 	$suathanhcong ="<div class='alert alert-info'>

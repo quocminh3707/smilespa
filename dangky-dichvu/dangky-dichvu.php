@@ -1,8 +1,11 @@
 <?php  
 	require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
 	$KM_id = $_GET["id"];
+	$user = Model_KhachHang::find($KM_id);
+
 	
 ?>
+
 <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../assets/css/fonts.googleapis.com.css" />
 <link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css" />
@@ -58,11 +61,12 @@
 						<div class="page-header">
 							<h1>
 								Đăng ký dịch vụ
+								<i class="ace-icon fa fa-angle-double-right"></i>
 								<small>
-									<i class="ace-icon fa fa-angle-double-right"></i>
-									Danh sách dịch vụ "TÊN KHÁCH"
+								Danh sách các dịch vụ mà khách hàng <b style="font-size:17px;"><?php echo $user->Ho." ".$user->Ten; ?>	</b> đã đăng ký
 								</small>
 							</h1>
+
 						</div><!-- /.page-header -->
 
 						<div class="row">
@@ -71,8 +75,14 @@
 								<div class="row">
 									
 									<div class="col-xs-12">
+									<div class="pull-left mr-bottom">
+										<a onClick="history.go(-1);" href="" role="button" class="btn btn-xs badge-info">
+												<i class="ace-icon fa fa-arrow-left"></i>
+												Back
+										</a>
+									</div>
 									<div class="pull-right mr-bottom">
-										<a href="#create-khuyenmai" role="button" class="btn btn-xs btn-success btn-dangky-dichvu" data-toggle="modal">
+										<a href="#" role="button" class="btn btn-xs btn-success btn-dangky-dichvu" data-toggle="modal">
 												<i class="ace-icon fa fa-plus bigger-120"></i>
 												Thêm
 										</a>
@@ -85,10 +95,9 @@
 													<th class="center">Điều trị</th>
 													<th class="center">Giá dịch vụ</th>
 													<th class="center">KM</th>
-													<th class="center">Tổng thanh toán</th>
+													<th class="center">Tổng phải thanh toán</th>
 													<th class="center">Tình trạng thanh toán</th>
-													<th class="center">Nợ</th>
-													<th class="center">Ghi chú</th>
+													<th class="center">Còn nợ lại</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -97,42 +106,35 @@
 													<?php
 													$dkdichvu = Model_DangKyDichVu::all();
 													foreach($dkdichvu as $row){
-														if($row->khachhang_id == $KM_id){
-															echo 
-														$row->khachhang_id;
+														if($row->KhachHang_id == $KM_id){
+
 													?>
 														
 														<tr>
 															<th class="center"><?php echo $row->created_at ?></th>
 															<th class="center"><?php echo $row->dichvu->TenDichVu ?></th>
-															<th class="center"><?php echo $row->dieutri->id ?></th>
+															<th class="center"><?php echo "<a href='#'>".$row->SoBuoiDieuTri."</a>" ?></th>
 															<th class="center">
 																<?php 
 																	$giadichvu = $row->GiaDichVu;
 																	echo number_format($giadichvu, '0', '.', '.').' VNĐ';
 																?>
 															</th>
-															<th class="center"><?php
+															<th class="center">
+															<?php
 																if($row->KhuyenMai_id == 0){
-																	//khong khuyen mai
-																	echo "không";
+																	echo "0";
 																}else{
-																	//co khuyen mai
-																	if($row->khuyenmai->LoaiKM == 1){
-																		//tien
-																		$giakhuyenmai = $row->khuyenmai->SoTien;
-																		echo number_format($giakhuyenmai, '0', '.', '.').' VNĐ';
+																	if($row->khuyenmai->PhanTram == 0){
+																		$tien = $row->khuyenmai->SoTien;
+																		echo number_format($tien, '0', '.', '.').' VNĐ';
 																	}else{
-																		//phan tram
-																		echo $row->khuyenmai->PhanTram. " %";
-																		$giadichvu = $row->GiaDichVu;
 																		$phantram = $row->khuyenmai->PhanTram;
-																		$giaphantram = ($giadichvu/100)*$phantram;
-																		echo "</br>( - ".number_format($giaphantram, '0', '.', '.').' VNĐ )';
-																		// echo "</br>( - ".$giaphantram." )";
+																		echo number_format($phantram, '0', '.', '.').'%<br>';
+																		$tinhphantram = ($row->GiaDichVu/100)*$phantram;
+																		echo "( -".number_format($tinhphantram, '0', '.', '.').' VNĐ )';
 																	}
-																}	
-																
+																}
 															?>
 																	
 															</th>
@@ -144,44 +146,56 @@
 																		$thanhtoan= $row->GiaDichVu;
 																		echo number_format($thanhtoan, '0', '.', '.').' VNĐ';
 																	}else{
-																		//co khuyen mai
-																		if($row->khuyenmai->LoaiKM == 1){
-																			//tien
-																			$giadichvu = $row->GiaDichVu;
-																			$sotien = $row->khuyenmai->SoTien;
-																			$thanhtoantien = $giadichvu - $sotien;
-																			echo number_format($thanhtoantien, '0', '.', '.').' VNĐ';
+																		if($row->khuyenmai->PhanTram == 0){
+																		$tien = $row->khuyenmai->SoTien;
+																		$tongthanhtoan = $row->GiaDichVu - $tien;
+																		echo number_format($tongthanhtoan, '0', '.', '.').' VNĐ';
 																		}else{
-																			//phan tram
-																			$giadichvu = $row->GiaDichVu;
 																			$phantram = $row->khuyenmai->PhanTram;
-																			$giaphantram = ($giadichvu/100)*$phantram;
-																			$thanhtoanphantram = $giadichvu - $giaphantram;
-																			echo number_format($thanhtoanphantram, '0', '.', '.').' VNĐ';
+																			$tinhphantram = ($row->GiaDichVu/100)*$phantram;
+																			$tongthanhtoan = $row->GiaDichVu - $tinhphantram;
+																echo number_format($tongthanhtoan, '0', '.', '.' ).' VNĐ';
 																		}
 																	}	
 																 ?>	
 															</th>
 															<th class="center">
 																<?php 
-																	if($row->lanthanhtoan == 0){
+																	// if($row->lanthanhtoan()->get()->isEmpty()){
+																	if($row->TTlan1 == 0){	
 																		//chua thanh toan
-																		echo "<a href='#'>Chưa thanh toán</a>";
+																		echo "<a 
+																		data-dangky-id='".$row->id."'
+																		data-khachhang-id='".$row->KhachHang_id."' 
+																		data-dichvu-id='".$row->DichVu_id."' class='btn btn-xs btn-info btn-lanthanhtoan' href='#lanthanhtoan'>
+																		<i class='ace-icon fa fa-plus bigger-120'></i>Chưa thanh toán</a>";
 																	}else{
-																		//da thanh toan
+																		$lanTT =  $row->DaThanhToan;
+																		echo "<a  class='btn btn-xs btn-warning btn-lanthanhtoan-edit label-warning'><i class='ace-icon fa fa-pencil bigger-120'></i>".number_format($lanTT, '0', '.', '.').' VNĐ'."</a>";
+																	// 	."</br>".
+																	// 	"<a data-id='' href='#edit-' class='btn btn-xs btn-info btn-edit'>
+																	// 	<i class='ace-icon fa fa-pencil bigger-120'></i>
+																	// </a>
+																	// ";
 																	}
 																?>	
 															</th>
-															<th>
+															<th class="center">
 																<?php
-																if($row->lanthanhtoan == 0){
-																	
+																if($row->DaThanhToan != 0){
+																	if($row->DaThanhToan == $row->NoLai){
+																		echo "<span class='btn btn-xs btn-success'>Hết nợ</span>";
 																	}else{
-
+																		$nolai = $row->NoLai."<br>";
+																		$dathanhtoan =  $row->DaThanhToan;
+																		$nosaukhithanhtoan = $nolai - $dathanhtoan;
+																		echo number_format($nosaukhithanhtoan, '0', '.', '.' ).' VNĐ';
 																	}
+																}else{
+																echo number_format($row->NoLai, '0', '.', '.' ).' VNĐ';
+																}	
 																?>
 															</th>
-															<th></th>
 															<td>
 																<div class="hidden-sm hidden-xs btn-group">
 
@@ -189,7 +203,7 @@
 																		<i class="ace-icon fa fa-pencil bigger-120"></i>
 																	</a>
 
-																	<button class="btn btn-xs btn-danger">
+																	<button data-id="<?php echo $row->id ?>" data-name="<?php echo $row->dichvu->TenDichVu; ?>" data-id-khachhang="<?php echo $row->khachhang_id ?>" class="btn btn-xs btn-danger btn-delete-dangkydichvu">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</button>
 																</div>
@@ -247,14 +261,6 @@
 			</div>
 			<form id="form-edit-dieutri" method="post" action="edit.php" class="form-horizontal cmxform" novalidate="novalidate">
 					<input type='hidden' name='id' id="IDHidden2" value=""/>
-					<input type='hidden' name='SoLanDieuTri_id' 
-						value='<?php 
-						$all_dieutri = Model_DieuTri::all(); 
-						foreach($all_dieutri as $dieutri){
-							echo $dieutri["id"];
-						}
-
-						?>'>
 					<div class="modal-body">
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right">Dịch vụ</label>
@@ -281,7 +287,7 @@
 							<label class="col-sm-3 control-label no-padding-right">Khuyến mãi</label>
 							<div class="col-sm-9">
 								<select name='KhuyenMai_id'>
-									<option value="-1">--- Không khuyến mãi ---</option>
+									<option value="0">--- Không khuyến mãi ---</option>
 	                            	<?php 
 	                            	$all_khuyenmai = Model_KhuyenMai::all();
 	                            	foreach($all_khuyenmai as $khuyenmai){
@@ -318,7 +324,24 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right">Nhân viên tư vấn</label>
 							<div class="col-sm-9">
-								<input type="text" name="NhanVienTuVan" value="" placeholder="Nhân viên tư vấn" class="form-control required" aria-required="true">
+								<select name='NhanVienTuVan'>
+	                            	<?php 
+	                            	$all_user = Model_User::all();
+	                            	foreach($all_user as $user){
+	                            		if($user->level == 3){?>
+	                            		<option value='<?php echo $user->id ?>'>
+	                            			<?php
+	                            				
+	                            					echo $user->Ho. $user->Ho;
+	                            				
+	                            			?>
+                            			</option>
+                            			
+	                            		<?php
+	                            		}
+	                            	}
+	                            	?>
+	                            </select>
 							</div>
 						</div>
 						<div class="form-group" style="display: none;">
@@ -339,6 +362,25 @@
 		</div>
 	</div>
 </div>
+<div id="del-dangkydichvu" class="modal fade" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Xác nhận xóa</h4>
+            </div>
+            <div class="modal-body" id="msg-delete">Bạn có chắc chắn muốn xóa dịch vụ <b>
+                </b> không?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+                <a href="javascript:;" class="btn btn-danger" id="msg-link">Có</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<?php require $_SERVER['DOCUMENT_ROOT'] . '/spa/lanthanhtoan/modal.php'; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . '/spa/lanthanhtoan/modal-edit.php'; ?>
+
 <script type="text/javascript">
 function edit_ajax(id) {
         $.ajax({
@@ -359,9 +401,65 @@ function edit_ajax(id) {
                 }
             }
         });
-    }	
+    }
+    function del(id, name) {
+        $('#msg-delete').html('Bạn có chắc chắn muốn xóa khách hàng <b>' + name + '</b> không?');
+        $('#msg-link').attr('href', 'delete.php?id=' + id);
+        $('#del-dangkydichvu').modal();
+    };
+	$('.btn-delete-dangkydichvu').click(function (e) {
+	        var name = $(this).attr('data-name');
+	        var id = $(this).attr('data-id');
+	        del(id, name);
+	    });	
 	$('.btn-edit').click(function (e) {
         edit_ajax($(this).attr('data-id'));
         $('#edit-dieutri').modal();
    });
+	$('.btn-lanthanhtoan').click(function (e) {
+        // edit_ajax($(this).attr('data-id'));
+        var dichvu_id = $(this).attr('data-dichvu-id');
+        var khachhang_id = $(this).attr('data-khachhang-id');
+        var id = $(this).attr('data-dangky-id');
+        $('#update-lanthanhtoan').modal();
+        $("#form-update-lanthanhtoan input[name='DichVu_id']").val(dichvu_id);
+        $("#form-update-lanthanhtoan input[name='KhachHang_id']").val(khachhang_id);
+        $("#form-update-lanthanhtoan input[name='id']").val(id);
+   });
+	function edit_ajax_lanthanhtoan(id) {
+        $.ajax({
+            url: '../lanthanhtoan/get.php?id=' + id,
+            type: 'GET',
+            dataType: 'html',
+            error: function () {
+                alert('Ajax error!');
+            },
+            success: function (json) {
+                $('#modalTitle').html('Chỉnh sửa');
+                var obj = jQuery.parseJSON(json);
+                if (obj == null) {
+                    alert('Không lấy được dữ liệu! Xin vui lòng thử lại sau!');
+                } else {
+                    $('#IDHiddenEDLanThanhToan').val(obj.id);
+                    $('#TTlan1ED').val(obj.TTlan1);
+                    $('#TTlan2ED').val(obj.TTlan2);
+                    $('#TTlan3ED').val(obj.TTlan3);
+                    $('#TTlan4ED').val(obj.TTlan4);
+                    $('#TTlan5ED').val(obj.TTlan5);
+                }
+            }
+        });
+    }
+	$('.btn-lanthanhtoan-edit').click(function (e) {
+        edit_ajax_lanthanhtoan($(this).attr('data-id'));
+        var khachhang_id = $(this).attr('data-khachhang-id');
+        var id = $(this).attr('data-dangky-id');
+        $('#edit-lanthanhtoan').modal();
+        $("#form-edit-lanthanhtoan input[name='KhachHang_id']").val(khachhang_id);
+        $("#form-update-lanthanhtoan input[name='id']").val(id);
+   });
 </script>
+<?php 
+require DIRECT_DIR . 'dangky-dichvu/modal.php';
+?>
+

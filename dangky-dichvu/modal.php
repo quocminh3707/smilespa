@@ -1,3 +1,4 @@
+
 <div id="modal-dangky-dichvu" class="modal fade" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -5,7 +6,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 					<h4 class="modal-title" id="modalTitle">Thêm mới</h4>
 				</div>
-				<form id="form-dangky-dichvu" method="post" action="dangky-dichvu/create.php" class="form-horizontal cmxform" novalidate="novalidate">
+				<form id="form-dangky-dichvu" method="post" action="<?php echo "/" . SOURCE_FOLDER. 'dangky-dichvu/create.php'; ?>" class="form-horizontal cmxform" novalidate="novalidate">
 					<input type='hidden' name='khachhang_id'/>
 					<input type='hidden' name='SoLanDieuTri_id' 
 						value='<?php 
@@ -78,16 +79,24 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right">Nhân viên tư vấn</label>
 							<div class="col-sm-9">
-								<input type="text" name="NhanVienTuVan" value="" placeholder="Nhân viên tư vấn" class="form-control required" aria-required="true">
-							</div>
-						</div>
-						<div class="form-group" style="display: none;">
-							<label class="col-sm-3 control-label no-padding-right">Mã cơ sở</label>
-							<div class="col-sm-9">
-								<select name="CoSo_id" id="CoSo_id" class="form-control required" placeholder="Cơ sở" aria-required="true">
-									<option value="0">Cơ sở Huế</option>
-									<option value="1">Cơ sở Sài Gòn</option>
-								</select>
+								<select name='NhanVienTuVan'>
+	                            	<?php 
+	                            	$all_user = Model_User::all();
+	                            	foreach($all_user as $user){
+	                            		if($user->level == 3){?>
+	                            		<option value='<?php echo $user->id ?>'>
+	                            			<?php
+	                            				
+	                            					echo $user->Ho. $user->Ho;
+	                            				
+	                            			?>
+                            			</option>
+                            			
+	                            		<?php
+	                            		}
+	                            	}
+	                            	?>
+	                            </select>
 							</div>
 						</div>
 					</div>
@@ -100,6 +109,7 @@
 		</div>
 </div>
 <script>
+////////////////////////// tim id khachhang cho muc dangky-dichvu
 	$(document).ready(function(){
 		$(".btn-dangky-dichvu").click(function(){
 			var khachhang_id = $(this).closest('tr').attr('data-khachhang-id');

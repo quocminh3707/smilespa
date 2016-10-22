@@ -1,7 +1,8 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/spa/include/db.php';
-
-print_r($_POST);
+// echo "<pre>";
+// print_r($_POST);
+// exit();
 if(isset($_POST['id']))
 {
 

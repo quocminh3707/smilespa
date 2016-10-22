@@ -8,8 +8,8 @@ if (isset($_POST['submit'])) {
 	$dichvu->MaDichVu = $_POST['MaDichVu'];
 	$dichvu->TenDichVu = $_POST['TenDichVu'];
 	$dichvu->TinhTrang = $_POST['TinhTrang'];
-	$dichvu->MaCoSo = $_POST['MaCoSo'];
 	$dichvu->DonGia = $_POST['DonGia'];
+	$dichvu->CoSo_Id = $_SESSION['coso'];
 	$dichvu->save();
 	$themthanhcong ="<div class='alert alert-success'>
 						<button class='close' data-dismiss='alert'>

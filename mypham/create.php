@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
 	$mypham = new Model_MyPham();
 	$mypham->MaMP = $_POST['MaMP'];
 	$mypham->TenMP = $_POST['TenMP'];
-	$mypham->MaCoSo = $_POST['MaCoSo'];
+	$mypham->CoSo_Id = $_SESSION['coso'];
 	$mypham->Soluong = $_POST['Soluong'];
 	$mypham->save();
 	$themthanhcong ="<div class='alert alert-success'>

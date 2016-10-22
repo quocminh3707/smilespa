@@ -51,7 +51,7 @@
                 
                 
                 <?php
-                $all_mypham = Model_MyPham::all()->toArray();
+                $all_mypham = Model_MyPham::where('CoSo_Id', $_SESSION['coso'])->get()->toArray();
                  foreach($all_mypham as $row)
                  {
                    ?>   
@@ -70,11 +70,11 @@
                             <td class="text-center"><?php echo $row['updated_at']; ?></td>
                             <td class="text-center">
                                 <?php 
-                                $macoso = $row['MaCoSo'];
-                                if($macoso == "CS1" ){
-                                    echo "CS Huế";
+                                $coso = $row['CoSo_Id'];
+                                if($coso == 1 ){
+                                    echo "Cơ sở Huế";
                                 }else{
-                                    echo "CS Sài Gòn";
+                                    echo "Cơ sở Sài Gòn";
                                 }
                                 ?>
                             </td>

@@ -25,6 +25,6 @@ class Model_DangKyDichVu extends Model
     }
     public function lanthanhtoan()
     {
-        return $this->hasOne('Model_LanThanhToan', 'id', 'LaThanhToan_id');
+        return $this->hasOne('Model_LanThanhToan', 'id', 'LanThanhToan_id');
     }
 }

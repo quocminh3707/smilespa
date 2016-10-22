@@ -53,7 +53,9 @@
                 
                 
                 <?php
-                $all_dichvu = Model_DichVu::all()->toArray();
+
+                //// Co so 
+                $all_dichvu = Model_DichVu::where('CoSo_Id', $_SESSION['coso'])->get()->toArray();
                  foreach($all_dichvu as $row)
                  {
                    ?>   
@@ -78,8 +80,8 @@
                             </td>
                             <td class="text-center">
                                 <?php 
-                                $coso = $row['MaCoSo'];
-                                if($coso == "CS1" ){
+                                $coso = $row['CoSo_Id'];
+                                if($coso == 1 ){
                                     echo "Cơ sở Huế";
                                 }else{
                                     echo "Cơ sở Sài Gòn";
@@ -148,15 +150,6 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" style="display: none;">
-                            <label class="col-sm-3 control-label no-padding-right">Tên cơ sở</label>
-                            <div class="col-sm-9">
-                                <select name="MaCoSo" class="form-control required" placeholder="Cơ sở" aria-required="true">
-                                    <option value="0">Cơ sở Huế</option>
-                                    <option value="1">Cơ sở Sài Gòn</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right">Đơn giá</label>
                             <div class="col-sm-9">
@@ -221,15 +214,6 @@
                                 <select name="TinhTrang" id="TinhTrang2" class="form-control required" placeholder="Tình trạng">
                                     <option value="0">Đang sử dụng</option>
                                     <option value="1">Hết sử dụng</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" style="display: none;">
-                            <label class="col-sm-3 control-label no-padding-right">Tên cơ sở</label>
-                            <div class="col-sm-9">
-                                <select name="MaCoSo" name="MaCoSo2" class="form-control required" placeholder="Cơ sở" aria-required="true">
-                                    <option value="0">Cơ sở Huế</option>
-                                    <option value="1">Cơ sở Sài Gòn</option>
                                 </select>
                             </div>
                         </div>
